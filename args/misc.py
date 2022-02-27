@@ -15,6 +15,8 @@ def parse(parser):
                       help = "Randomize clock's correct time and NPC clues in Zozo")
     misc.add_argument("-scan", "--scan-all", action = "store_true",
                       help = "All enemies scannable. All characters start with scan learned. Scan costs 0 MP. Useful for testing/debugging")
+    misc.add_argument("-nomusic", "--no-music", action = "store_true",
+                      help = "Overwrite all music entries in the game with silence. Sound effects will still play")
 
     event_timers = misc.add_mutually_exclusive_group()
     event_timers.add_argument("-etr", "--event-timers-random", action = "store_true",
@@ -49,7 +51,7 @@ def parse(parser):
     remove_flashes.add_argument("-frw", "--flashes-remove-worst", action = "store_true",
                               help = "Removes only the worst flashes from animations. Ex: Learning Bum Rush, Bum Rush, Quadra Slam/Slice, Flash, etc.")
     remove_flashes.add_argument("-frm", "--flashes-remove-most", action = "store_true",
-                              help = "Removes most flashes from animations. Includes Kefka Death.")
+                              help = "Removes most flashes from animations. Includes Kefka Death."),
 
 def process(args):
     args.y_npc = False # are any y_npc flags enabled?
