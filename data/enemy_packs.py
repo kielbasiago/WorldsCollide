@@ -19,6 +19,11 @@ class EnemyPacks():
     PHUNBABA3 = 386
     DOOM_GAZE = 349
 
+    # statues removed from shuffle pool with -bmbs flag
+    DOOM=354
+    GODDESS=355
+    POLTERGEIST=356
+
     def __init__(self, rom, args, formations):
         self.rom = rom
         self.args = args
@@ -40,6 +45,10 @@ class EnemyPacks():
 
     def _replaceable_bosses(self):
         replaceable = list(bosses.normal_pack_name)
+        if not self.args.mix_bosses_statues:
+            for boss in [self.DOOM, self.GODDESS, self.POLTERGEIST]:
+                replaceable.remove(boss)
+                self.event_boss_replacements[boss] = boss
         if not self.args.shuffle_random_phunbaba3:
             replaceable.remove(self.PHUNBABA3)
             self.event_boss_replacements[self.PHUNBABA3] = self.PHUNBABA3
