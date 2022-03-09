@@ -80,6 +80,11 @@ class Shop():
         self.item_count -= 1
         self.items.append(self.NO_ITEM)
 
+    def replace(self, current_item, new_item):
+        index = self.items.index(current_item)
+        if index >= 0:
+            self.items[index] = new_item
+
     def clear(self):
         for item_index in range(self.ITEM_CAPACITY):
             self.items[item_index] = self.NO_ITEM

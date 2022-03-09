@@ -226,11 +226,22 @@ class Shops():
             exclude.append(self.items.get_id("Exp. Egg"))
         if self.args.shops_no_illuminas:
             exclude.append(self.items.get_id("Illumina"))
-
         for shop in self.shops:
             for item in exclude:
                 if shop.contains(item):
-                    shop.remove(item)
+                    replacing = next((i for i in self.items.items if i.id == item), None)
+                    replacement = self.get_replacement_item(shop, replacing, exclude)
+                    if replacement is not None:
+                        shop.replace(item, replacement)
+
+    # Get a random replacement item of the same tier.
+    def get_replacement_item(self, shop, item, exclude):
+        import random
+        from data.shop_item_tiers import tiers
+        item_type = self.items.get_type(item.id)
+        replacements = [i for i in tiers[item_type] if len(i)]
+        replacement = None if len(replacements) == 0 else random.choice(next((it for it in replacements if not shop.contains(it) and it not in exclude), None))
+        return None if replacement is None else replacement
 
     def disable_buy_if_empty(self):
         # in shops with no items scrolling breaks and you can buy "Empty" items
@@ -268,8 +279,9 @@ class Shops():
         elif self.args.shop_inventory_empty:
             self.clear_inventories()
 
-        self.assign_dried_meats()
         self.remove_excluded_items()
+        self.assign_dried_meats()
+
 
     def log(self):
         from log import section_entries, format_option

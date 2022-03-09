@@ -29,7 +29,7 @@ class Data:
         self.items = items.Items(rom, args, self.dialogs, self.characters)
         self.items.mod()
 
-        self.metamorph_groups = metamorph_groups.MetamorphGroups(rom)
+        self.metamorph_groups = metamorph_groups.MetamorphGroups(rom, self.items)
         self.metamorph_groups.mod()
 
         self.maps = maps.Maps(rom, args, self.items)

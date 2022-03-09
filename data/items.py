@@ -16,12 +16,11 @@ class Items():
     GOOD = [name_id[name] for name in good_items]
     if args.stronger_atma_weapon:
         GOOD.append(name_id["Atma Weapon"])
-    if args.no_free_paladin_shields:
-        GOOD.remove(name_id["Paladin Shld"])
-    if args.no_exp_eggs:
-        GOOD.remove(name_id["Exp. Egg"])
-    if args.no_illuminas:
-        GOOD.remove(name_id["Illumina"])
+
+    if args.remove_item_ids:
+        for id in args.remove_item_ids:
+            if id in GOOD:
+                GOOD.remove(id)
 
     def __init__(self, rom, args, dialogs, characters):
         self.rom = rom
@@ -273,17 +272,9 @@ class Items():
         return item_list
 
     def get_excluded(self):
-        exclude = []
+        if self.args.remove_item_ids:
+            exclude = self.args.remove_item_ids
 
-        if self.args.no_moogle_charms:
-            exclude.append(name_id["Moogle Charm"])
-        if self.args.no_exp_eggs:
-            exclude.append(name_id["Exp. Egg"])
-        if self.args.no_illuminas:
-            exclude.append(name_id["Illumina"])
-        if self.args.no_free_paladin_shields:
-            exclude.append(name_id["Paladin Shld"])
-            exclude.append(name_id["Cursed Shld"])
         if self.args.permadeath:
             exclude.append(name_id["Fenix Down"])
 
