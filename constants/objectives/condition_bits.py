@@ -66,6 +66,13 @@ check_bit = [
     NameBit("Whelk Gate", event_bit.DEFEATED_WHELK),
     NameBit("Zone Eater", event_bit.RECRUITED_GOGO_WOR),
     NameBit("Zozo Tower", event_bit.GOT_ZOZO_REWARD),
+
+    # Any new event bits must be added at the bottom as the id is the index
+    NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO),                # 59
+    NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN),             # 60
+    NameBit("Left Triad Statue", event_bit.DEFEATED_DOOM),                      # 61
+    NameBit("Middle Triad Statue", event_bit.DEFEATED_POLTERGEIST),             # 62
+    NameBit("Right Triad Statue", event_bit.DEFEATED_GODDESS),                  # 63
 ]
 
 quest_bit = [

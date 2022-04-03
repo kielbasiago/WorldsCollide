@@ -1,5 +1,5 @@
 # NOTE: (address - 1e80) * 0x8 + bit
-# e.g. (1eb7 - 1e80) * 0x8 + 0x1 = 1b9 (airship visible) 
+# e.g. (1eb7 - 1e80) * 0x8 + 0x1 = 1b9 (airship visible)
 #      (1f43 - 1e80) * 0x8 + 0x3 = 61b (characters on narshe battlefield)
 
 DISABLE_SAVE_POINT_TUTORIAL = 0x133
@@ -123,6 +123,9 @@ STARTED_FEEDING_CID = 0x0b2 # custom, previously found cid dead
 CID_SURVIVED = 0x0b3
 CID_DIED = 0x0b4
 FINISHED_FEEDING_CID = 0x0b9 # custom
+DEFEATED_GUARDIAN=0x0bc
+DEFEATED_INFERNO=0x0bd
+
 BOARDED_CRIMSON_ROBBERS_BOAT_NIKEAH = 0x0ac
 DEFEATED_TENTACLES_FIGARO = 0x0c6
 LIGHT_JUDGEMENT_TZEN = 0x27d
@@ -188,6 +191,9 @@ WEST_PATH_BLOCKED_KEFKA_TOWER = 0x065   # path to doom in switch room
 EAST_PATH_BLOCKED_KEFKA_TOWER = 0x066   # path to goddess in switch room
 NORTH_PATH_OPEN_KEFKA_TOWER = 0x067     # path to guardian in switch room
 SOUTH_PATH_OPEN_KEFKA_TOWER = 0x071     # path to balcony in switch room
+DEFEATED_DOOM=0x072
+DEFEATED_GODDESS=0x073
+DEFEATED_POLTERGEIST=0x074
 CENTER_DOOR_KEFKA_TOWER = 0x080         # center door in weights room
 LEFT_RIGHT_DOORS_KEFKA_TOWER = 0x0d0    # doors to doom/goddess opened on balcony
 UNLOCKED_KT_SKIP = 0x093 # custom

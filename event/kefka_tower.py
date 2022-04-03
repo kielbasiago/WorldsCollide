@@ -27,6 +27,7 @@ class KefkaTower(Event):
 
         self.item = self.atma_reward.id
         self.atma_battle_mod()
+        # TODO: Implement similar fn for Goddess, Doom, Poltergeist, and Guardian
         self.atma_mod()
 
         self.inferno_battle_mod()
