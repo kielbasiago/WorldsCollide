@@ -4,7 +4,7 @@ class Arguments:
         self.groups = [
             "settings",
             "objectives",
-            "starting_party", "characters", "swdtechs", "blitzes", "lores", "rages", "dances", "steal", "commands",  
+            "starting_party", "characters", "swdtechs", "blitzes", "lores", "rages", "dances", "steal", "commands",
             "xpmpgp", "scaling", "bosses", "encounters", "boss_ai",
             "espers", "natural_magic",
             "starting_gold_items", "items", "shops", "chests",
@@ -66,6 +66,66 @@ class Arguments:
 
         if self.debug:
             self.spoiler_log = True
+
+
+        meta = {}
+        import sys
+        flags = sys.argv
+
+        groups = self.parser._action_groups
+
+        for group in groups:
+            title = group.title
+            description = group.description
+            actions = group._group_actions
+            group_title =  getattr(group, 'title', '')
+
+            for action in actions:
+                mutually_exclusive_group_title = None
+                for meg in self.parser._mutually_exclusive_groups:
+                    if action in (meg._group_actions or []):
+                        mutually_exclusive_group_title = meg.title
+
+                meta[action.dest] = {
+                    'type': action.type.__name__ if action.type else str.__name__,
+                    'template': action.option_strings[0] + (" {{#args}} {{ . }} {{/args}}"),
+                    'default': action.default,
+                    'description': action.help,
+                    'nargs': action.nargs,
+                    'args': action.metavar,
+                    'allowed_values': None if action.choices is None else list(action.choices) if not isinstance(action.choices, range) else None,
+                    'group': group_title if type(group_title) == str else None if group_title == None else group_title(),
+                    'mutually_exclusive_group': mutually_exclusive_group_title if type(mutually_exclusive_group_title) == str else None if mutually_exclusive_group_title == None else mutually_exclusive_group_title()
+                }
+        # for meg in self.parser._mutually_exclusive_groups:
+        #     latest_action = meg._group_actions[0]
+        #     latest_idx = 0
+        #     for action in meg._group_actions:
+        #         for os in action.option_strings:
+        #             if os in flags:
+        #                 rev = flags[-1::-1].index(os)
+        #                 this_idx = len(flags) - 1 if rev == 0 else (len(flags) - rev - 1)
+        #                 latest_action = latest_action if this_idx <= latest_idx else action
+        #                 latest_idx = latest_idx if this_idx <= latest_idx else this_idx
+
+        #     for action in [act for act in meg._group_actions if act != latest_action]:
+        #         for os in action.option_strings:
+        #             # if any aliases are in the args string, remove it and all subsequent args
+        #             while os in flags:
+        #                 idx = flags.index(os)
+        #                 flags.pop(idx)
+        #                 # remove excess args
+        #                 while (len(flags) > idx and flags[idx][0] != '-'):
+        #                     flags.pop(idx)
+
+        import json
+        final_data = meta
+        file_name = self.output_file.replace('.smc', '.json')
+        with open("./log.loggerino", "w") as out_file:
+            out_file.write(json.dumps(final_data, indent = 4))
+
+
+
 
     def _process_min_max(self, arg_name):
         values = getattr(self, arg_name)
