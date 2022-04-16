@@ -210,6 +210,17 @@ CONTINUE_MUSIC_DURING_BATTLE = 0x2bc
 ENABLE_Y_PARTY_SWITCHING = 0x1ce
 ALWAYS_CLEAR = 0x176 # this event_bit is always clear, used for branching
 
+# Unused Bits
+# bits 0x200-0x22e Used for banquet soldiers
+# 2 bits 0x1bc-0x1bd Unused
+# 3 bits 0x1c7-0x1c9 Unused
+# 3 bits 0x2c1-0x2c3 Unused
+
+UNLOCKED_KT_GAUNTLET = 0x2c2
+COMPLETED_KT_GAUNTLET = 0x2c3
+# 8 bits 0x1e6-0x1ed Unused, as the SNES versions feature 20 rare item slots rather than 30
+GAUNTLET_IN_PROGRESS = 0x1e6
+
 from constants.objectives import MAX_OBJECTIVES
 for index in range(MAX_OBJECTIVES):
     globals()["OBJECTIVE" + str(index)] = 0xe0 + index

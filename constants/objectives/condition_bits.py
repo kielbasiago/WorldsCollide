@@ -71,7 +71,6 @@ check_bit = [
     NameBit("Auction 2", event_bit.AUCTION_BOUGHT_ESPER2),
 ]
 
-
 quest_bit = [
     NameBit("Defeat Sealed Cave Ninja", event_bit.DEFEATED_NINJA_CAVE_TO_SEALED_GATE),
     NameBit("Help Injured Lad", event_bit.HELPED_INJURED_LAD),
@@ -88,6 +87,7 @@ quest_bit = [
     NameBit("Defeat KT Left Statue", event_bit.DEFEATED_DOOM),
     NameBit("Defeat KT Mid Statue", event_bit.DEFEATED_POLTERGEIST),
     NameBit("Defeat KT Right Statue", event_bit.DEFEATED_GODDESS),
+    NameBit("Complete the KT Gauntlet", event_bit.COMPLETED_KT_GAUNTLET)
 ]
 
 from constants.objectives.boss_ids import boss_objective_ids
