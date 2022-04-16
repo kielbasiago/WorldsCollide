@@ -102,6 +102,9 @@ category_types["Item"].append(ResultType(71, "High Tier Shield", "High Tier Shie
 category_types["Item"].append(ResultType(72, "High Tier Helm", "High Tier Helm", None))
 category_types["Item"].append(ResultType(73, "High Tier Relic", "High Tier Relic", None))
 
+category_types["Kefka's Tower"] += [ResultType(90, "Unlock KT Gauntlet", None)]
+
+
 categories = list(category_types.keys())
 
 id_type = {}

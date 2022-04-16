@@ -71,6 +71,13 @@ check_bit = [
     NameBit("Auction 2", event_bit.AUCTION_BOUGHT_ESPER2),
 ]
 
+check_bit += [                                                          # Index
+    NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO),        # 59
+    NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN),     # 60
+    NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM),           # 61
+    NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST),      # 62
+    NameBit("KT Right Triad Statue", event_bit.DEFEATED_GODDESS),       # 63
+]
 
 quest_bit = [
     NameBit("Defeat Sealed Cave Ninja", event_bit.DEFEATED_NINJA_CAVE_TO_SEALED_GATE),
@@ -88,6 +95,7 @@ quest_bit = [
     NameBit("Defeat KT Left Statue", event_bit.DEFEATED_DOOM),
     NameBit("Defeat KT Mid Statue", event_bit.DEFEATED_POLTERGEIST),
     NameBit("Defeat KT Right Statue", event_bit.DEFEATED_GODDESS),
+    NameBit("Complete the KT Gauntlet", event_bit.COMPLETED_KT_GAUNTLET)
 ]
 
 from constants.objectives.boss_ids import boss_objective_ids
