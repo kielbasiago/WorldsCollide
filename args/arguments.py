@@ -88,14 +88,18 @@ class Arguments:
 
                 meta[action.dest] = {
                     'type': action.type.__name__ if action.type else str.__name__,
-                    'template': action.option_strings[0] + (" {{#args}} {{ . }} {{/args}}"),
+                    'template': action.option_strings[0] + (" {{#args}} {{ . }}{{/args}}"),
                     'default': action.default,
                     'description': action.help,
                     'nargs': action.nargs,
                     'args': action.metavar,
                     'allowed_values': None if action.choices is None else list(action.choices) if not isinstance(action.choices, range) else None,
                     'group': group_title if type(group_title) == str else None if group_title == None else group_title(),
-                    'mutually_exclusive_group': mutually_exclusive_group_title if type(mutually_exclusive_group_title) == str else None if mutually_exclusive_group_title == None else mutually_exclusive_group_title()
+                    'mutually_exclusive_group': mutually_exclusive_group_title if type(mutually_exclusive_group_title) == str else None if mutually_exclusive_group_title == None else mutually_exclusive_group_title(),
+                    'options': {
+                        'min_val': action.choices[0] if isinstance(action.choices, range) else None,
+                        'max_val': action.choices[-1] if isinstance(action.choices, range) else None,
+                    }
                 }
         # for meg in self.parser._mutually_exclusive_groups:
         #     latest_action = meg._group_actions[0]
