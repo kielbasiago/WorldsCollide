@@ -3,6 +3,14 @@ def name():
 
 def parse(parser):
     challenges = parser.add_argument_group("Challenges")
+    # Legacy flags - Thse will be mapped to --remove-items args
+    challenges.add_argument("-nmc", "--no-moogle-charms", action = "store_true",
+                            help = "Moogle Charms will not appear in coliseum/auction/shops/chests/events")
+    challenges.add_argument("-nee", "--no-exp-eggs", action = "store_true",
+                            help = "Exp. Eggs will not appear in coliseum/auction/shops/chests/events")
+    challenges.add_argument("-nil", "--no-illuminas", action = "store_true",
+                            help = "Illuminas will not appear in coliseum/auction/shops/chests/events")
+
     challenges.add_argument("-ri", "--remove-items", type = str,
                         help = "Remove items from game. They will no longer appear in coliseum/auction/shops/chests/events, though can still be accessed via objective results.")
     challenges.add_argument("-nu", "--no-ultima", action = "store_true",
