@@ -272,11 +272,12 @@ class Items():
         return item_list
 
     def get_excluded(self):
+        exclude = []
         if self.args.remove_item_ids:
-            exclude = self.args.remove_item_ids
+            exclude += self.args.remove_item_ids
 
         if self.args.permadeath:
-            exclude.append(name_id["Fenix Down"])
+            exclude += [name_id["Fenix Down"]]
 
         return exclude
 
