@@ -26,8 +26,6 @@ def parse(parser):
                           help = "Each boss will provide the base XP value per level")
 
 def process(args):
-    pass
-
     if args.boss_experience_flat:
         args._process_min_max("boss_experience_flat")
 
@@ -47,6 +45,8 @@ def flags(args):
         flags += " -bnds"
     if args.boss_experience:
         flags += " -be"
+    if args.boss_experience_flat:
+        flags += f" -bef {args.boss_experience_flat_min} {args.boss_experience_flat_max}"
     if args.boss_no_undead:
         flags += " -bnu"
 
@@ -59,12 +59,18 @@ def options(args):
     elif args.boss_battles_random:
         boss_battles = "Random"
 
+    boss_exp = "None"
+    if args.boss_experience:
+        boss_exp = "Classic"
+    elif args.boss_experience_flat:
+        boss_exp = f"Flat {args.boss_experience_flat_min}-{args.boss_experience_flat_max}"
+
     return [
         ("Boss Battles", boss_battles),
         ("Mix Bosses & Dragons", args.mix_bosses_dragons),
         ("Shuffle/Random Phunbaba 3", args.shuffle_random_phunbaba3),
         ("Normalize & Distort Stats", args.boss_normalize_distort_stats),
-        ("Boss Experience", args.boss_experience),
+        ("Boss Exp", boss_exp),
         ("No Undead", args.boss_no_undead),
     ]
 
