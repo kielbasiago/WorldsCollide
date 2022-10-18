@@ -139,6 +139,17 @@ class Enemies():
             elif boss_name in hp2x:
                 enemy.hp *= 2
 
+    def boss_experience_flat(self):
+        import random
+        from data.bosses import normal_enemy_name, dragon_enemy_name
+        exp =  random.randint(self.args.boss_experience_flat_min, self.args.boss_experience_flat_max)
+
+        for id, enemy_name in normal_enemy_name.items():
+            self.enemies[id].exp = exp * self.enemies[id].level
+
+        for id, enemy_name in dragon_enemy_name.items():
+            self.enemies[id].exp = exp * self.enemies[id].level
+
     def boss_experience(self):
         from data.bosses_custom_exp import custom_exp
         for enemy_id, exp in custom_exp.items():
@@ -315,7 +326,9 @@ class Enemies():
 
         self.apply_scaling()
 
-        if self.args.boss_experience:
+        if self.args.boss_experience_flat:
+            self.boss_experience_flat()
+        elif self.args.boss_experience:
             self.boss_experience()
 
         if not self.args.encounters_escapable_original:

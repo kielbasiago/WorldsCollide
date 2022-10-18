@@ -15,13 +15,21 @@ def parse(parser):
                         help = "Apply Shuffle/Random to Phunbaba 3 (otherwise he will only appear in Mobliz WOR)")
     bosses.add_argument("-bnds", "--boss-normalize-distort-stats", action = "store_true",
                         help = "Normalize lower boss stats and apply random distortion")
-    bosses.add_argument("-be", "--boss-experience", action = "store_true",
-                        help = "Boss battles award experience")
     bosses.add_argument("-bnu", "--boss-no-undead", action = "store_true",
                         help = "Undead status removed from bosses")
 
+    boss_exp = bosses.add_mutually_exclusive_group()
+    boss_exp.add_argument("-be", "--boss-experience", action = "store_true",
+                        help = "Boss battles award experience")
+    boss_exp.add_argument("-bef", "--boss-experience-flat", type = int,
+                          nargs = 2, metavar = ("MIN", "MAX"), choices = range(500),
+                          help = "Each boss will provide the base XP value per level")
+
 def process(args):
     pass
+
+    if args.boss_experience_flat:
+        args._process_min_max("boss_experience_flat")
 
 def flags(args):
     flags = ""
