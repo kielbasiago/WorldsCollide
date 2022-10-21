@@ -143,14 +143,15 @@ class Enemies():
         import random
         from data.bosses import normal_enemy_name, dragon_enemy_name
         from data.bosses_custom_exp import custom_exp
-        exp =  random.randint(self.args.boss_experience_flat_min, self.args.boss_experience_flat_max)
 
         for id, enemy_name in normal_enemy_name.items():
             exists = custom_exp.get(id)
             if exists is not None and custom_exp[id] > 30:
+                exp =  random.randint(self.args.boss_experience_flat_min, self.args.boss_experience_flat_max)
                 self.enemies[id].exp = exp * self.enemies[id].level
 
         for id, enemy_name in dragon_enemy_name.items():
+            exp =  random.randint(self.args.boss_experience_flat_min, self.args.boss_experience_flat_max)
             self.enemies[id].exp = exp * self.enemies[id].level
 
     def boss_experience(self):

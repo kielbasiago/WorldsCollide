@@ -23,7 +23,7 @@ def parse(parser):
                         help = "Boss battles award experience")
     boss_exp.add_argument("-bef", "--boss-experience-flat", type = int,
                           nargs = 2, metavar = ("MIN", "MAX"), choices = range(500),
-                          help = "Each boss will provide the base XP value per level")
+                          help = "Each boss will provide provided xp per level. Each boss is rolled independently")
 
 def process(args):
     if args.boss_experience_flat:
