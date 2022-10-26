@@ -1,3 +1,20 @@
+from argparse import _StoreTrueAction
+import json
+class Object:
+    def toJSON(self):
+        return self.__dict__
+                          #//, default=lambda o: o.__dict__,
+            # sort_keys=True, indent=4)
+
+blacklist = [
+    'help',
+    'input_file',
+    'output_file',
+    'seed_id',
+    'debug',
+    'no_rom_output',
+    'stdout_log'
+]
 class Arguments:
     def __init__(self):
         import importlib
@@ -81,55 +98,49 @@ class Arguments:
             group_title =  getattr(group, 'title', '')
 
             for action in actions:
-                mutually_exclusive_group_title = None
+                if action.dest in blacklist:
+                    continue
                 for meg in self.parser._mutually_exclusive_groups:
                     if action in (meg._group_actions or []):
-                        mutually_exclusive_group_title = meg.title
+                        action.mutually_exclusive_group_title = meg.title
 
-                meta[action.dest] = {
-                    'type': action.type.__name__ if action.type else str.__name__,
-                    'template': action.option_strings[0] + (" {{#args}} {{ . }}{{/args}}"),
-                    'default': action.default,
-                    'description': action.help,
-                    'nargs': action.nargs,
-                    'args': action.metavar,
-                    'allowed_values': None if action.choices is None else list(action.choices) if not isinstance(action.choices, range) else None,
-                    'group': group_title if type(group_title) == str else None if group_title == None else group_title(),
-                    'mutually_exclusive_group': mutually_exclusive_group_title if type(mutually_exclusive_group_title) == str else None if mutually_exclusive_group_title == None else mutually_exclusive_group_title(),
-                    'options': {
-                        'min_val': action.choices[0] if isinstance(action.choices, range) else None,
-                        'max_val': action.choices[-1] if isinstance(action.choices, range) else None,
-                    }
-                }
-        # for meg in self.parser._mutually_exclusive_groups:
-        #     latest_action = meg._group_actions[0]
-        #     latest_idx = 0
-        #     for action in meg._group_actions:
-        #         for os in action.option_strings:
-        #             if os in flags:
-        #                 rev = flags[-1::-1].index(os)
-        #                 this_idx = len(flags) - 1 if rev == 0 else (len(flags) - rev - 1)
-        #                 latest_action = latest_action if this_idx <= latest_idx else action
-        #                 latest_idx = latest_idx if this_idx <= latest_idx else this_idx
+                meta[action.dest] = Object()
+                meta[action.dest].key = action.dest
 
-        #     for action in [act for act in meg._group_actions if act != latest_action]:
-        #         for os in action.option_strings:
-        #             # if any aliases are in the args string, remove it and all subsequent args
-        #             while os in flags:
-        #                 idx = flags.index(os)
-        #                 flags.pop(idx)
-        #                 # remove excess args
-        #                 while (len(flags) > idx and flags[idx][0] != '-'):
-        #                     flags.pop(idx)
+                if isinstance(action, _StoreTrueAction):
+                    meta[action.dest].type = 'bool'
+                else:
+                    meta[action.dest].type = action.type.__name__ if action.type else str.__name__
+
+                meta[action.dest].flag = action.option_strings[0]
+
+                if action.default:
+                    meta[action.dest].default = action.default
+                if action.help:
+                    meta[action.dest].description = action.help
+                if action.nargs:
+                    meta[action.dest].nargs = action.nargs
+                if action.metavar:
+                    meta[action.dest].args = action.metavar
+                if action.choices is not None and isinstance(action.choices, list) and not isinstance(action.choices, range):
+                    meta[action.dest].allowed_values = list(action.choices)
+                if type(group_title):
+                    meta[action.dest].group = group_title if type(group_title) == str else None if group_title == None else group_title()
+                if getattr(action, 'mutually_exclusive_group_title', None) is not None:
+                    meta[action.dest].mutually_exclusive_group = action.mutually_exclusive_group_title
+                if getattr(action, 'choices', None) is not None:
+                    if isinstance(action.choices, range):
+                        meta[action.dest].options = {
+                            'min_val': action.choices[0] if isinstance(action.choices, range) else None,
+                            'max_val': action.choices[-1] if isinstance(action.choices, range) else None
+                        }
+
+        final = {key: value.toJSON() for key, value in meta.items()}
 
         import json
-        final_data = meta
         file_name = self.output_file.replace('.smc', '.json')
-        with open("./log.loggerino", "w") as out_file:
-            out_file.write(json.dumps(final_data, indent = 4))
-
-
-
+        with open("./wc-metadata.json", "w") as out_file:
+            out_file.write(json.dumps(final, indent = 4))
 
     def _process_min_max(self, arg_name):
         values = getattr(self, arg_name)
