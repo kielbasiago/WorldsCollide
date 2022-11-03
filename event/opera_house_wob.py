@@ -1,3 +1,4 @@
+from constants.entities import SETZER
 from event.event import *
 
 class OperaHouseWOB(Event):
@@ -57,10 +58,13 @@ class OperaHouseWOB(Event):
 
         if self.reward.type == RewardType.CHARACTER:
             self.character_mod(self.reward.id)
+            self.character_music_mod(self.reward.id if self.args.replace_character_check_themes else SETZER)
         elif self.reward.type == RewardType.ESPER:
             self.esper_mod(self.reward.id)
+            self.character_music_mod(SETZER)
         elif self.reward.type == RewardType.ITEM:
             self.item_mod(self.reward.id)
+            self.character_music_mod(SETZER)
 
         self.log_reward(self.reward)
 
@@ -262,13 +266,10 @@ class OperaHouseWOB(Event):
 
     def grand_finale_mod(self):
         formation = self.get_replacement_formation("Ultros 2")
+        replace_music = self.args.disable_ultros2_boss_theme and self.args.boss_battles_shuffled
 
-        # if bosses are random and multiple of one formation can appear,
-        # fighting this boss outside of the opera house will inform you this boss is in the opera house
-        dont_remove_music = self.args.boss_battles_random
-
-        formation.disable_battle_music = formation.disable_battle_music if dont_remove_music else 1
-        formation.disable_victory_dance = formation.disable_victory_dance if dont_remove_music else 1
+        formation.disable_battle_music = formation.disable_battle_music if replace_music else 1
+        formation.disable_victory_dance = formation.disable_victory_dance if replace_music else 1
 
     def after_battle_mod(self):
         # when maria changes to celes, a special celes sprite is used
@@ -288,8 +289,10 @@ class OperaHouseWOB(Event):
         # hide party leader to prevent possible conflict between celes being party leader and the person on stage at
         # the same time. also hide party leader when other npcs are hidden by shifting [0xcac16c, 0xcac26c] down
         # a few memory spaces into previous "what a performance!!" dialog code to make room for hiding party leader
-        space = Reserve(0xac16f, 0xac26f, "opera house move setzer entrance instructions")
-        space.copy_from(0xac16c, 0xac26c)
+        # bytes 0xac16c-0xac16d are inserted in character_music_mod()
+        space = Reserve(0xac171, 0xac26f, "opera house move setzer entrance instructions")
+        space.copy_from(0xac16e, 0xac26c)
+
         space = Reserve(0xac16c, 0xac16e, "opera house hide party leader", field.NOP())
         space.write(
             field.HideEntity(field_entity.PARTY0),
@@ -348,6 +351,14 @@ class OperaHouseWOB(Event):
         space.write(
             field.Branch(end_event),
         )
+
+    def character_music_mod(self, character):
+        from music.song_utils import get_character_theme
+        # 0xac16c-0xac16d typically play setzer's theme,
+        # but in the after_battle_mod() 0xac16c-0xac26c are shifted 3 bytes to the right,
+        # so the theme now occupies 0xac16f-0xac170
+        space = Reserve(0xac16f, 0xac170, "Play Song Setzer")
+        space.write(field.StartSong(get_character_theme(character)))
 
     def character_mod(self, character):
         self.setzer_npc.sprite = character

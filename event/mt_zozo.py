@@ -113,7 +113,16 @@ class MtZozo(Event):
             letter_text += "<line><            ><" + char_name + "><end>"
         self.dialogs.set_text(2568, letter_text)
 
+    def character_music_mod(self, character):
+        from music.song_utils import get_character_theme
+        if self.args.replace_character_check_themes:
+            space = Reserve(0xc4007, 0xc4008, "Play Song Cyan")
+            space.write([
+                field.StartSong(get_character_theme(character)),
+            ])
+
     def character_mod(self, character):
+        self.character_music_mod(character)
         self.cliff_cyan_npc.sprite = character
         self.cliff_cyan_npc.palette = self.characters.get_palette(character)
 

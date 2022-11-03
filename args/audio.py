@@ -9,6 +9,7 @@ def parse(parser):
                        help = "The boss in the Ultros 2 location (Opera House) will now play it's regular battle theme instead of being disabled for the Grand Finale.")
 
 def process(args):
+    args.disable_ultros2_boss_theme = not args.restore_ultros2_boss_theme
     args.replace_character_check_themes = not args.restore_character_check_themes
 
 def flags(args):
