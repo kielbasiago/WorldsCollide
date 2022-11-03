@@ -1,24 +1,22 @@
-from objectives.conditions._objective_condition import ObjectiveCondition
+from constants.objectives.conditions import ConditionType
 
 class ObjectiveConditionMetadata:
-    def __init__(self, condition: ObjectiveCondition):
+    def __init__(self, condition: ConditionType):
         self.condition = condition
-        self.condition_type_name = condition.condition_type.name
-        self.condition_type_value = condition.condition_type.value
-        if hasattr(condition, 'count'):
-            self.value = condition.count
-        elif hasattr(condition, 'value'):
-            self.value = condition.value
-        self.NAME = condition.NAME
-        self.base_address = condition.base_address()
-        self.bit = condition.bit()
 
     def to_json(self):
+        fn = self.condition.string_function
+        value_descriptions = []
+        for value in (self.condition.value_range or []):
+            if value == "r":
+                value_descriptions.append('Random')
+            elif hasattr(fn, '__call__'):
+                value_descriptions.append(fn(value))
+            else:
+                value_descriptions.append(value)
         return {
-            'condition_type_name': self.condition_type_name,
-            'condition_type_value': self.condition_type_value,
-            'value': self.value,
-            'name': str(self.condition),
-            'base_address': self.base_address,
-            'bit': self.bit
+            'condition_type_name': self.condition.name,
+            'value_range': getattr(self.condition, 'value_range', None),
+            'value_descriptions': value_descriptions,
+            'range': self.condition.min_max
         }
