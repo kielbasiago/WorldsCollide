@@ -35,11 +35,9 @@ class ObjectiveMetadataWriter:
             condition = self.conditions[index]
             meta['conditions'].append(condition.to_json())
 
-        # final_data = [o.to_json() for o in meta]
-        if not args.no_rom_output:
-            file_name = args.output_file.replace('.smc', '.json') if args.output_file.endswith('.smc') else f"{args.output_file}-objective.json"
-            with open(file_name, "w") as out_file:
-                out_file.write(json.dumps(meta, indent = 4))
+        file_name = f"{args.output_file}-objective.json"
+        with open(file_name, "w") as out_file:
+            out_file.write(json.dumps(meta, indent = 4))
 
     def __len__(self):
         return len(self.objectives)

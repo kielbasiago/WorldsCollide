@@ -17,9 +17,6 @@ class Object:
 
 class FlagMetadataWriter:
     def __init__(self, args):
-        import sys
-        flags = sys.argv
-
         self.groups = args.parser._action_groups
         self.mutually_exclusive_groups = args.parser._mutually_exclusive_groups
         self.metadata = {}
@@ -71,6 +68,8 @@ class FlagMetadataWriter:
 
             self.final_output = {key: value.toJSON() for key, value in self.metadata.items()}
 
+            import args
             import json
-            with open("./wc-flag-metadata.json", "w") as out_file:
+            file_name = f"{args.output_file}-flag.json"
+            with open(file_name, "w") as out_file:
                 out_file.write(json.dumps(self.final_output, indent = 4))

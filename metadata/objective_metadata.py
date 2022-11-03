@@ -10,14 +10,13 @@ class ObjectiveMetadata:
     def to_json(self):
         formatter = self.objective.format_string
         if "{:+d}" in formatter:
-            format_string = formatter.replace('{:+d}', "{{ . }}")
+            formatter = formatter.replace('{:+d}', "{{ . }}", True)
         elif "{}" in formatter:
-            format_string = formatter.replace('{}', "{{ . }}")
-        else:
-            format_string = formatter
+            formatter = formatter.replace('{}', "{{ . }}", True)
+
         return {
             'id': self.objective.id,
             'name': self.objective.name,
             'value_range': self.objective.value_range,
-            'format_string': format_string
+            'format_string': formatter
         }
