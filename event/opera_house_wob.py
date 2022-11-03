@@ -53,6 +53,8 @@ class OperaHouseWOB(Event):
         self.ultros_battle_mod()
         self.after_battle_mod()
 
+        self.grand_finale_mod()
+
         if self.reward.type == RewardType.CHARACTER:
             self.character_mod(self.reward.id)
         elif self.reward.type == RewardType.ESPER:
@@ -258,6 +260,16 @@ class OperaHouseWOB(Event):
             field.Call(field.ORIGINAL_CHECK_GAME_OVER),
         )
 
+    def grand_finale_mod(self):
+        formation = self.get_replacement_formation("Ultros 2")
+
+        # if bosses are random and multiple of one formation can appear,
+        # fighting this boss outside of the opera house will inform you this boss is in the opera house
+        dont_remove_music = self.args.boss_battles_random
+
+        formation.disable_battle_music = formation.disable_battle_music if dont_remove_music else 1
+        formation.disable_victory_dance = formation.disable_victory_dance if dont_remove_music else 1
+
     def after_battle_mod(self):
         # when maria changes to celes, a special celes sprite is used
         # change it to use normal celes sprite to allow customization and use a different pose
@@ -298,7 +310,7 @@ class OperaHouseWOB(Event):
         space.write(
             field.Call(show_celes),
         )
-       
+
         # do not animate the now hidden party leader
         space = Reserve(0xac28a, 0xac28d, "opera house do not turn party leader up", field.NOP())
         space = Reserve(0xac30d, 0xac312, "opera house do not move party leader up", field.NOP())
