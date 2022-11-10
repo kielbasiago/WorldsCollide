@@ -24,8 +24,8 @@ def flags(args):
     elif args.open_world:
         flags += " -open"
 
-    if args.spoiler_log:
-        flags += " -sl"
+    # if args.spoiler_log:
+    #     flags += " -sl"
 
     return flags
 
