@@ -230,7 +230,23 @@ class Shops():
         for shop in self.shops:
             for item in exclude:
                 if shop.contains(item):
-                    shop.remove(item)
+                    replacing = next((i for i in self.items.items if i.id == item), None)
+                    replacement = self.get_replacement_item(shop, replacing, exclude)
+                    if replacement is not None:
+                        shop.replace(item, replacement)
+
+    # Get a random replacement item of the same tier.
+    def get_replacement_item(self, shop, item, exclude):
+        import random
+        from constants.items import id_name
+        from data.shop_item_tiers import tiers
+        item_type_tiers = tiers[self.items.get_type(item.id)]
+        replacements = [i for i in item_type_tiers if item.id in i][0]
+        if len(replacements) == 0:
+            replacement = None
+        else:
+            replacement =  random.choice([it for it in replacements if not shop.contains(it) and it not in exclude])
+        return None if replacement is None else replacement
 
     def disable_buy_if_empty(self):
         # in shops with no items scrolling breaks and you can buy "Empty" items
@@ -240,7 +256,7 @@ class Shops():
 
         src = [
             asm.LDX(0x67, asm.DIR),         # x = shop index
-            asm.INX(),                      # skip shop flags byte
+            asm.INX(),                       # skip shop flags byte
             asm.LDA(0xc47ac0, asm.LNG_X),   # load first item byte
             asm.CMP(0xff, asm.IMM8),        # is first item slot empty?
             asm.BNE("OPEN_BUY_MENU"),       # branch if not
@@ -268,8 +284,9 @@ class Shops():
         elif self.args.shop_inventory_empty:
             self.clear_inventories()
 
-        self.assign_dried_meats()
         self.remove_excluded_items()
+        self.assign_dried_meats()
+
 
     def log(self):
         from log import section_entries, format_option

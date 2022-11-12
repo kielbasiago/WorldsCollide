@@ -200,8 +200,20 @@ class Chests():
         exclude = self.items.get_excluded()
         for chest in self.all_chests:
             if chest.type == Chest.ITEM and chest.contents in exclude:
-                chest.type = Chest.EMPTY
-                chest.contents = 0
+                replacement = self.get_replacement_item(chest.contents, exclude)
+                if replacement is None:
+                    chest.type = chest.EMPTY
+                    chest.contents = 0
+                else:
+                    chest.contents = replacement
+
+    def get_replacement_item(self, item_id, exclude):
+        import random
+        from data.chest_item_tiers import tiers
+        same_item_tier = next((tier for tier in tiers if item_id in tier), [])
+        replacements = [i for i in same_item_tier if i not in exclude]
+        replacement = random.choice(replacements) if len(replacements) else None
+        return None if replacement is None else replacement
 
     def fix_shared_bits(self):
         # some chests on different maps share the same opened bits but have different contents

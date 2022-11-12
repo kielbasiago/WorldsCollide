@@ -98,10 +98,11 @@ class AuctionHouse(Event):
         self.zephyr_cape_item = self.items.get_id("Zephyr Cape")
 
         if self.args.auction_random_items:
-            self.cherub_down_item = self.items.get_random()
-            self.cure_ring_item = self.items.get_random()
-            self.hero_ring_item = self.items.get_random()
-            self.zephyr_cape_item = self.items.get_random()
+            exclude = self.items.get_excluded()
+            self.cherub_down_item = self.items.get_random(exclude=exclude)
+            self.cure_ring_item = self.items.get_random(exclude=exclude)
+            self.hero_ring_item = self.items.get_random(exclude=exclude)
+            self.zephyr_cape_item = self.items.get_random(exclude=exclude)
 
             self.log_change("Cherub Down", f"{self.items.get_name(self.cherub_down_item):<12} (10,000, WOB, multiple)")
             self.log_change("Cure Ring", f"{self.items.get_name(self.cure_ring_item):<12} (20,000, WOB, multiple)")

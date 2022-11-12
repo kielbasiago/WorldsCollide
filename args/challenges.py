@@ -9,31 +9,31 @@ def parse(parser):
                             help = "Exp. Eggs will not appear in coliseum/auction/shops/chests/events")
     challenges.add_argument("-nil", "--no-illuminas", action = "store_true",
                             help = "Illuminas will not appear in coliseum/auction/shops/chests/events")
+
+    challenges.add_argument("-rfi", "--remove-items", type = str,
+                        help = "Remove all items obtainable out-of-battle from game. They will no longer appear in auction/chests/coliseum/events/shops, though can still be accessed via objective results.")
     challenges.add_argument("-nu", "--no-ultima", action = "store_true",
                             help = "Ultima cannot be learned from espers/items/natural magic")
-    challenges.add_argument("-nfps", "--no-free-paladin-shields", action = "store_true",
-                            help = "Paladin/Cursed Shields will not appear in coliseum/auction/shops/chests/events (Narshe WOR exclusive)")
     challenges.add_argument("-nfce", "--no-free-characters-espers", action = "store_true",
                             help = "Remove character/esper rewards from: Auction House, Collapsing House, Figaro Castle Throne, Gau's Father's House, Kohlingen Inn, Narshe Weapon Shop, Sealed Gate, South Figaro Basement")
     challenges.add_argument("-pd", "--permadeath", action = "store_true",
                             help = "Life spells cannot be learned. Fenix Downs unavailable (except from starting items). Buckets/inns/tents/events do not revive characters. Phoenix casts Life 3 on party instead of Life")
 
 def process(args):
-    pass
+    from data.item_names import id_name
+    args.remove_item_ids = []
+    args.remove_item_names = []
+    if args.remove_items:
+        args.remove_item_ids =   [int(i) for i in args.remove_items.split(',')]
+        args.remove_item_names = [id_name[i] for i in args.remove_item_ids]
 
 def flags(args):
     flags = ""
 
-    if args.no_moogle_charms:
-        flags += " -nmc"
-    if args.no_exp_eggs:
-        flags += " -nee"
-    if args.no_illuminas:
-        flags += " -nil"
+    if args.remove_items:
+        flags += f" -rfi {args.remove_items}"
     if args.no_ultima:
         flags += " -nu"
-    if args.no_free_paladin_shields:
-        flags += " -nfps"
     if args.no_free_characters_espers:
         flags += " -nfce"
     if args.permadeath:
@@ -43,11 +43,8 @@ def flags(args):
 
 def options(args):
     return [
-        ("No Moogle Charms", args.no_moogle_charms),
-        ("No Exp Eggs", args.no_exp_eggs),
-        ("No Illuminas", args.no_illuminas),
+        ("Removed Items", args.remove_item_names),
         ("No Ultima", args.no_ultima),
-        ("No Free Paladin Shields", args.no_free_paladin_shields),
         ("No Free Characters/Espers", args.no_free_characters_espers),
         ("Permadeath", args.permadeath),
     ]
