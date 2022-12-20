@@ -1,12 +1,12 @@
+from constants.checks import KEFKAS_TOWER_CELL_BEAST
 from event.event import *
-import args
 
 class KefkaTower(Event):
     def name(self):
         return "Kefka's Tower"
 
     def init_rewards(self):
-        self.atma_reward = self.add_reward(RewardType.ITEM)
+        self.atma_reward = self.add_reward(KEFKAS_TOWER_CELL_BEAST)
 
     def init_event_bits(self, space):
         space.write(
@@ -241,6 +241,68 @@ class KefkaTower(Event):
         space = Reserve(0xc18b4, 0xc18ba, "kefka tower invoke battle atma", field.NOP())
         space.write(
             field.InvokeBattle(boss_pack_id),
+        )
+
+    # Copy at least 4 bytes triggering an encounter and extends it to 
+    #   complete the check and check objectives once the encounter finishes. 
+    # This will be called after one of the kt encounters has completed, but just prior to finishing the check
+    def kt_encounter_objective_mod(self, boss_name, bit, start_target, end_target, description):
+        src = Read(start_target, end_target)
+        src += [
+            field.SetEventBit(bit),
+            field.CheckObjectives(),
+            field.Return(),
+        ]
+        post_battle = Write(Bank['CC'], src, f"1) {boss_name} post-battle. 2) Set event bit. 3) Finish check")
+
+        space = Reserve(start_target, end_target, description, asm.NOP())
+        space.write([
+            field.Call(post_battle.start_address)
+        ])
+
+    def guardian_mod(self):
+        self.kt_encounter_objective_mod(
+            "Guardian",
+            event_bit.DEFEATED_GUARDIAN,
+            0xc186c,
+            0xc186f,
+            "Guardian battle post-script, wait for fade, set bit",
+        )
+
+    def inferno_mod(self):
+        self.kt_encounter_objective_mod(
+            "Inferno",
+            event_bit.DEFEATED_INFERNO,
+            0xc18ae,
+            0xc18b1,
+            "Inferno battle post-script, fade in, wait, set bit",
+        )
+
+    def doom_mod(self):
+        self.kt_encounter_objective_mod(
+            "Doom",
+            event_bit.DEFEATED_DOOM,
+            0xc16f0,
+            0xc16f3,
+            "Doom battle post-script, Hide NPC 5, set npc bit",
+        )
+
+    def goddess_mod(self):
+        self.kt_encounter_objective_mod(
+            "Goddess",
+            event_bit.DEFEATED_GODDESS,
+            0xc1730,
+            0xc1733,
+            "Goddess battle post-script, Hide NPC 2, set npc bit",
+        )
+
+    def poltergeist_mod(self):
+        self.kt_encounter_objective_mod(
+            "Goddess",
+            event_bit.DEFEATED_POLTERGEIST,
+            0xc1786,
+            0xc1789,
+            "Poltergeist battle post-script, Hide NPCs, set npc bit",
         )
 
     def atma_mod(self):
