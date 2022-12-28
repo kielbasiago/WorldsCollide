@@ -40,7 +40,7 @@ FLOATING_CONT_BEAST = NameBit("Floating Cont. Beast", event_bit.DEFEATED_ATMAWEA
 FLOATING_CONT_ESCAPE = NameBit("Floating Cont. Escape", event_bit.FINISHED_FLOATING_CONTINENT, CHAR_ESPER_REWARD, SHADOW)
 GAUS_FATHERS_HOUSE = NameBit("Gau's Father's House", event_bit.RECRUITED_SHADOW_GAU_FATHER_HOUSE, ANY_REWARD, SHADOW)
 IMPERIAL_CAMP = NameBit("Imperial Camp", event_bit.FINISHED_IMPERIAL_CAMP, ANY_REWARD, SABIN)
-KEFKAS_TOWER_AMBUSH = NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO, ANY_REWARD, MOG)
+KEFKAS_TOWER_AMBUSH = NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO, None, None)
 KEFKAS_TOWER_CELL_BEAST = NameBit("Kefka's Tower Cell Beast", event_bit.DEFEATED_ATMA, ITEM_REWARD, None)
 KEFKAS_TOWER_GUARDIAN = NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN, None, None)
 KEFKAS_TOWER_LEFT_STATUE = NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM, None, None)
@@ -87,7 +87,7 @@ NARSHE_DRAGON = NameBit("Narshe Dragon", event_bit.DEFEATED_NARSHE_DRAGON, Rewar
 OPERA_HOUSE_DRAGON = NameBit("Opera House Dragon", event_bit.DEFEATED_OPERA_HOUSE_DRAGON, RewardType.ITEM, None)
 PHOENIX_CAVE_DRAGON = NameBit("Phoenix Cave Dragon", event_bit.DEFEATED_PHOENIX_CAVE_DRAGON, RewardType.ITEM, None)
 
-# Checks
+# Checks - Index is used for objective condition ids
 all_checks = [
     AUCTION1,
     AUCTION2,
