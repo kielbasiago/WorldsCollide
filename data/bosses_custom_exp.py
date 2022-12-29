@@ -78,14 +78,16 @@ dragons = [
 ]
 
 class DragonExp:
+    MAX = "max"
     HIGH = "high"
     MEDIUM = "med"
     LOW = "low"
     NONE = "none"
 
-    ALL = [HIGH, MEDIUM, LOW, NONE]
+    ALL = [MAX, HIGH, MEDIUM, LOW, NONE]
 
 dragon_exp_values = {
+  DragonExp.MAX    :  {key: 250 for (idx, key) in enumerate(dragons)},
   DragonExp.HIGH    :  {key: 200 for (idx, key) in enumerate(dragons)},
   DragonExp.MEDIUM  : {key: 155 for (idx, key) in enumerate(dragons)},
   DragonExp.LOW     : {key: 125 for (idx, key) in enumerate(dragons)},
