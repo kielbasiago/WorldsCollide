@@ -44,16 +44,18 @@ class AuctionHouse(Event):
         return "Auction House"
 
     def init_rewards(self):
+        from constants.checks import AUCTION1, AUCTION2
+
         # determine reward possibilities based on flags (reward1 = 10K, reward2 = 20K)
-        if self.args.no_free_characters_espers or self.args.auction_max_espers == 0:
-            self.reward1 = self.add_reward(RewardType.ITEM)
-            self.reward2 = self.add_reward(RewardType.ITEM)
+        if self.args.auction_max_espers == 0:
+            self.reward1 = self.add_reward(AUCTION1, RewardType.ITEM)
+            self.reward2 = self.add_reward(AUCTION2, RewardType.ITEM)
         else:
-            self.reward2 = self.add_reward(RewardType.ESPER | RewardType.ITEM)
+            self.reward2 = self.add_reward(AUCTION2,RewardType.ESPER | RewardType.ITEM)
             if self.args.auction_max_espers == 1:
-                self.reward1 = self.add_reward(RewardType.ITEM)
+                self.reward1 = self.add_reward(AUCTION1,RewardType.ITEM)
             else: #auction_max_espers == 2:
-                self.reward1 = self.add_reward(RewardType.ESPER | RewardType.ITEM)
+                self.reward1 = self.add_reward(AUCTION1, RewardType.ESPER | RewardType.ITEM)
 
     def mod(self):
         self.requirements_mod()

@@ -45,8 +45,8 @@ class PreGameTrack:
         src += [
             SUBMENU_LABEL,
             asm.LDA(0x4b, asm.DIR),         # a = cursor index
-            asm.CMP(submenu_id, asm.IMM8), # is the cursor index = this submenu?
-            asm.BNE(SUBMENU_END_LABEL),    # branch if not
+            asm.CMP(submenu_id, asm.IMM8),  # is the cursor index = this submenu?
+            asm.BNE(SUBMENU_END_LABEL),     # branch if not
             asm.TDC(),
             asm.JSR(0x0eb2, asm.ABS),       # click sound
             asm.JSL(self.exit_scroll_area + START_ADDRESS_SNES), # save current submenu position
@@ -277,7 +277,7 @@ class PreGameTrack:
             asm.LDY(self.cursor_positions, asm.IMM16),
             c3.eggers_jump(0x0640),   # update cursor position
             c3.eggers_jump(0x07b0),   # add cursor to animation queue
-            asm.RTS(),                
+            asm.RTS(),
         ]
         space = Write(Bank.F0, src, "pregame track update cursor position")
         self.update_cursor_position = space.start_address
@@ -699,7 +699,7 @@ class PreGameTrack:
 
             c3.eggers_jump(0x6a19),   # clear BG1 b
             c3.eggers_jump(0x6a3c),   # clear BG3 a
-            c3.eggers_jump(0x6a41),   # clear BG3 b 
+            c3.eggers_jump(0x6a41),   # clear BG3 b
             c3.eggers_jump(0x6a46),   # clear BG3 c
             c3.eggers_jump(0x6a4b),   # clear BG3 d
 

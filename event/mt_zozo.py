@@ -1,17 +1,15 @@
+from constants.checks import MT_ZOZO
 from event.event import *
 
 class MtZozo(Event):
     def name(self):
-        return "Mt. Zozo"
+        return MT_ZOZO.name
 
     def character_gate(self):
         return self.characters.CYAN
 
     def init_rewards(self):
-        if self.args.no_free_characters_espers:
-            self.reward = self.add_reward(RewardType.ITEM)
-        else:
-            self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
+        self.reward = self.add_reward(MT_ZOZO)
 
     def init_event_bits(self, space):
         space.write(
