@@ -32,9 +32,12 @@ def parse(parser):
                         help = "Normalize lower boss stats and apply random distortion")
     bosses.add_argument("-be", "--boss-experience", action = "store_true",
                         help = "Boss battles award experience")
-    bosses.add_argument("-drexp", "--dragon-exp", type = str.lower,
-                        choices = DragonExp.ALL,
-                        help = "Control the base experience granted from dragon encounters. Only enabled when boss experience is on")
+    bosses.add_argument("-drexp", "--dragon-exp", 
+                        choices = range(0, 231),
+                        default = -1,
+                        metavar = "VALUE",
+                        type = int,
+                        help = "Control the base experience granted from dragon encounters. This value is used regardless of the boss experience flag")
 
     bosses.add_argument("-bnu", "--boss-no-undead", action = "store_true",
                         help = "Undead status removed from bosses")
@@ -47,16 +50,18 @@ def process(args):
         args.mix_bosses_dragons = None
     # if neither shuffling or randomizing bosses, and we try to mix the dragons/statues, simply shuffle them instead
     vanilla_locations = not (args.boss_battles_shuffle or args.boss_battles_random)
-    if vanilla_locations and args.dragon_boss_location == BossLocations.MIX:
-        args.dragon_boss_location = BossLocations.SHUFFLE
-    if vanilla_locations and args.statue_boss_location == BossLocations.MIX:
-        args.statue_boss_location = BossLocations.SHUFFLE
-       
-    if not args.boss_experience:
-        args.dragon_exp = DragonExp.NONE 
-    elif args.boss_experience and not args.dragon_exp:
-        args.dragon_exp = DragonExp.HIGH
 
+    if vanilla_locations and args.dragon_boss_location == BossLocations.MIX:
+        args.dragon_boss_locations = BossLocations.SHUFFLE
+    else:
+        args.dragon_boss_locations = args.dragon_boss_location    
+        
+    if vanilla_locations and args.statue_boss_location == BossLocations.MIX:
+        args.statue_boss_locations = BossLocations.SHUFFLE
+    else:
+        args.statue_boss_locations = args.statue_boss_location
+    
+       
 def flags(args):
     flags = ""
 
@@ -73,7 +78,7 @@ def flags(args):
     if args.statue_boss_location:
         flags += f" -stloc {args.statue_boss_location}"
         
-    if args.dragon_exp:
+    if args.dragon_exp is not None:
         flags += f" -dexp {args.dragon_exp}"
 
     if args.shuffle_random_phunbaba3:
@@ -103,15 +108,8 @@ def options(args):
     statue_battles = DEFAULT_DRAGON_PROTOCOL
     if args.statue_boss_location:
         statue_battles = args.statue_boss_location.capitalize()
-        
-    if args.dragon_exp == 'hi':
-        dragon_exp = 'High'
-    elif args.dragon_exp == 'med':
-        dragon_exp = 'Medium'
-    elif args.dragon_exp == 'lo':
-        dragon_exp = 'Low'
-    else:
-        dragon_exp = "None"
+    
+    dragon_exp = args.dragon_exp if args.dragon_exp > -1 else 0
         
     return [
         ("Boss Battles", boss_battles),

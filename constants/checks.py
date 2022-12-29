@@ -4,7 +4,7 @@ import data.event_bit as event_bit
 import data.npc_bit as npc_bit
 from event.event_reward import RewardType
 
-NameBit = namedtuple("NameBit", ["name", "bit", "reward_types", "gate_character"])
+NameBit = namedtuple("NameBit", ["name", "bit", "reward_types", "gate_character"], defaults={'reward_types' : RewardType.NONE})
 CHAR_ESPER_REWARD = RewardType.CHARACTER | RewardType.ESPER
 ANY_REWARD = RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM
 ESPER_ITEM_REWARD =  RewardType.ESPER | RewardType.ITEM
@@ -40,17 +40,17 @@ FLOATING_CONT_BEAST = NameBit("Floating Cont. Beast", event_bit.DEFEATED_ATMAWEA
 FLOATING_CONT_ESCAPE = NameBit("Floating Cont. Escape", event_bit.FINISHED_FLOATING_CONTINENT, CHAR_ESPER_REWARD, SHADOW)
 GAUS_FATHERS_HOUSE = NameBit("Gau's Father's House", event_bit.RECRUITED_SHADOW_GAU_FATHER_HOUSE, ANY_REWARD, SHADOW)
 IMPERIAL_CAMP = NameBit("Imperial Camp", event_bit.FINISHED_IMPERIAL_CAMP, ANY_REWARD, SABIN)
-KEFKAS_TOWER_AMBUSH = NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO), 
+KEFKAS_TOWER_AMBUSH = NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO, RewardType.NONE, None)
 KEFKAS_TOWER_CELL_BEAST = NameBit("Kefka's Tower Cell Beast", event_bit.DEFEATED_ATMA, ITEM_REWARD, None)
-KEFKAS_TOWER_GUARDIAN = NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN),
-KEFKAS_TOWER_LEFT_STATUE = NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM),    
-KEFKAS_TOWER_MIDDLE_STATUE = NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST),
-KEFKAS_TOWER_RIGHT_STATUE = NameBit("KT Right Triad Statue", event_bit.DEFEATED_GODDESS),
+KEFKAS_TOWER_GUARDIAN = NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN, RewardType.NONE, None)
+KEFKAS_TOWER_LEFT_STATUE = NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM, RewardType.NONE, None)
+KEFKAS_TOWER_MIDDLE_STATUE = NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST, RewardType.NONE, None)
+KEFKAS_TOWER_RIGHT_STATUE = NameBit("KT Right Triad Statue", event_bit.DEFEATED_GODDESS, RewardType.NONE, None)
 KOHLINGEN_CAFE = NameBit("Kohlingen Cafe", event_bit.RECRUITED_SHADOW_KOHLINGEN, ANY_REWARD, SETZER)
 LETE_RIVER = NameBit("Lete River", event_bit.RODE_RAFT_LETE_RIVER, ANY_REWARD, TERRA)
 LONE_WOLF_CHASE = NameBit("Lone Wolf Chase", event_bit.CHASING_LONE_WOLF7, ANY_REWARD, MOG)
 LONE_WOLF_MOOGLE_ROOM = NameBit("Lone Wolf Moogle Room", event_bit.GOT_BOTH_REWARDS_LONE_WOLF, ANY_REWARD, MOG)
-NARSHE_MOOGLE_DEFENSE = NameBit("Narshe Moogle Defense", event_bit.FINISHED_MOOGLE_DEFENSE, ANY_REWARD, MOG),
+NARSHE_MOOGLE_DEFENSE = NameBit("Narshe Moogle Defense", event_bit.FINISHED_MOOGLE_DEFENSE, ANY_REWARD, MOG)
 MAGITEK_FACTORY_TRASH = NameBit("Magitek Factory Trash", event_bit.GOT_IFRIT_SHIVA, ESPER_ITEM_REWARD, CELES)
 MAGITEK_FACTORY_GUARD = NameBit("Magitek Factory Guard", event_bit.DEFEATED_NUMBER_024, ESPER_ITEM_REWARD, CELES)
 MAGITEK_FACTORY_FINISH = NameBit("Magitek Factory Finish", event_bit.DEFEATED_CRANES, CHAR_ESPER_REWARD, CELES)
