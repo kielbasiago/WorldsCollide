@@ -145,12 +145,18 @@ class Enemies():
                 enemy.hp *= 2
 
     def boss_experience(self):
-        from data.bosses_custom_exp import custom_exp, dragon_exp_values, dragons
+        from data.bosses_custom_exp import custom_exp
         for enemy_id, exp in custom_exp.items():
             self.enemies[enemy_id].exp = exp * self.enemies[enemy_id].level
-        for dragon_id in dragons:
-            self.enemies[dragon_id].exp = dragon_exp_values[self.args.dragon_exp][dragon_id]
             
+    def dragon_experience(self):
+        from data.bosses_custom_exp import dragon_exp_values, dragons, DragonExp
+
+        for dragon_id in dragons:
+            if self.args.dragon_experience in DragonExp.ALL:
+                self.enemies[dragon_id].exp = dragon_exp_values[self.args.dragon_experience][dragon_id]
+            elif int(self.args.dragon_experience) > 0:
+                self.enemies[dragon_id].exp = int(self.args.dragon_experience)
 
     def boss_normalize_distort_stats(self):
         import random
@@ -340,6 +346,9 @@ class Enemies():
 
         if self.args.boss_experience:
             self.boss_experience()
+            
+        if self.args.dragon_experience:
+            self.dragon_experience()
 
         if not self.args.encounters_escapable_original:
             self.set_escapable()

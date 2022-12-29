@@ -32,11 +32,11 @@ def parse(parser):
                         help = "Normalize lower boss stats and apply random distortion")
     bosses.add_argument("-be", "--boss-experience", action = "store_true",
                         help = "Boss battles award experience")
-    bosses.add_argument("-drexp", "--dragon-exp", 
-                        choices = range(0, 231),
-                        default = -1,
+    bosses.add_argument("-de", "--dragon-experience", 
+                        choices = [str(x) for x in list(range(0, 231))] + DragonExp.ALL,
+                        default = None,
                         metavar = "VALUE",
-                        type = int,
+                        type = str.lower,
                         help = "Control the base experience granted from dragon encounters. This value is used regardless of the boss experience flag")
 
     bosses.add_argument("-bnu", "--boss-no-undead", action = "store_true",
@@ -61,7 +61,7 @@ def process(args):
     if vanilla_locations and args.statue_boss_location == BossLocations.MIX:
         args.statue_boss_locations = BossLocations.SHUFFLE
     elif args.statue_boss_location is not None:
-        args.statue_boss_locations = args.statue_boss_location
+        args.statue_boss_locations = args.statue_boss_location        
     
        
 def flags(args):
@@ -80,8 +80,8 @@ def flags(args):
     if args.statue_boss_location:
         flags += f" -stloc {args.statue_boss_location}"
         
-    if args.dragon_exp > -1:
-        flags += f" -dexp {args.dragon_exp}"
+    if args.dragon_experience is not None:
+        flags += f" -de {args.dragon_experience}"
 
     if args.shuffle_random_phunbaba3:
         flags += " -srp3"
@@ -107,7 +107,14 @@ def options(args):
 
     statue_battles = args.statue_boss_locations.capitalize()
     
-    dragon_exp = args.dragon_exp if args.dragon_exp > -1 else 0
+    if args.dragon_experience is None:
+        if args.boss_experience:
+            dragon_experience = DragonExp.HIGH # backwards compatibility
+        else:
+            dragon_experience = DragonExp.NONE
+    else:
+        dragon_experience = args.dragon_experience
+         
         
     return [
         ("Boss Battles", boss_battles),
@@ -116,7 +123,7 @@ def options(args):
         ("Shuffle/Random Phunbaba 3", args.shuffle_random_phunbaba3),
         ("Normalize & Distort Stats", args.boss_normalize_distort_stats),
         ("Boss Experience", args.boss_experience),
-        ("Dragon Experience", dragon_exp),
+        ("Dragon Experience", dragon_experience.capitalize()),
         ("No Undead", args.boss_no_undead),
         ("Marshal Keep Lobos", args.boss_marshal_keep_lobos),
     ]
