@@ -221,11 +221,14 @@ class TrackMenu:
         space = Write(Bank.C3, src, "track option click table")
         options_table = space.start_address
 
+        exit_scroll_area_handler = self.common.build_scroll_area_exit_handler(
+            self.MENU_NUMBER, self.common.invoke_flags, "track scroll area exit handler")
+
         src = [
             asm.JSR(self.common.refresh_sprites, asm.ABS),
 
             # if in a scroll-area menu, sustain the scroll area
-            asm.LDA(0x0200, asm.ABS), 
+            asm.LDA(0x0200, asm.ABS),
             asm.CMP(self.common.objectives.MENU_NUMBER, asm.IMM8),
             asm.BEQ("SUSTAIN_SCROLL_AREA"),
             asm.CMP(self.common.checks.MENU_NUMBER, asm.IMM8),
@@ -275,7 +278,10 @@ class TrackMenu:
             "SUSTAIN_SCROLL_AREA",
             asm.LDA(0x09, asm.DIR),
             asm.BIT(0x80, asm.IMM8),     # b pressed?
-            asm.BNE("EXIT_SCROLL_AREA"), # branch if so
+            asm.BEQ("HANDLE_FLAGS_SUBMENUS"), # branch if not
+            asm.JMP(exit_scroll_area_handler, asm.ABS), # b pressed: exit the scroll area
+
+            "HANDLE_FLAGS_SUBMENUS",
         ]
 
         for submenu_idx in self.common.flags.submenus.keys():
@@ -283,11 +289,7 @@ class TrackMenu:
 
         src += [
             asm.JMP(self.common.sustain_scroll_area, asm.ABS),
-
-            "EXIT_SCROLL_AREA",
         ]
-
-        src.extend(self.common.get_scroll_area_exit_src(self.MENU_NUMBER, self.common.invoke_flags))
 
         # Called by C3 JSR jump table
         space = Write(Bank.C3, src, "track sustain")

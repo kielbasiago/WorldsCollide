@@ -1,3 +1,4 @@
+from constants.checks import NARSHE_MOOGLE_DEFENSE
 from event.event import *
 import data.npc_bit as npc_bit
 from constants.entities import character_id
@@ -12,13 +13,13 @@ class NarsheMoogleDefense(Event):
     COLLAPSED_TERRA_NPC_ID = 0x19
 
     def name(self):
-        return "Narshe Moogle Defense"
+        return NARSHE_MOOGLE_DEFENSE.name
 
     def character_gate(self):
         return self.characters.MOG
 
     def init_rewards(self):
-        self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
+        self.reward = self.add_reward(NARSHE_MOOGLE_DEFENSE)
 
     def init_event_bits(self, space):
         space.write(

@@ -64,23 +64,23 @@ class EnemyPacks():
         import random
         statues = list(bosses.statue_pack_name)
         random.shuffle(statues)
-        return statues if self.args.statue_boss_location == bosses.BossLocations.MIX else []
+        return statues if self.args.statue_boss_locations == bosses.BossLocations.MIX else []
 
     # Dragon locations that become available for the general boss pool
     def _replaceable_dragons(self):
         import random
         statues = list(bosses.dragon_pack_name)
         random.shuffle(statues)
-        return statues if self.args.dragon_boss_location == bosses.BossLocations.MIX else []
+        return statues if self.args.dragon_boss_locations == bosses.BossLocations.MIX else []
 
     # As MIX is handled in the shuffle/random functions, this is for handling the other options
     def _handle_original_shuffle_statues(self):
         statues = list(bosses.statue_pack_name)
 
-        if self.args.statue_boss_location == bosses.BossLocations.ORIGINAL:
+        if self.args.statue_boss_locations == bosses.BossLocations.ORIGINAL:
             for statue in statues:
                 self.event_boss_replacements[statue] = statue
-        elif self.args.statue_boss_location == bosses.BossLocations.SHUFFLE:
+        elif self.args.statue_boss_locations == bosses.BossLocations.SHUFFLE:
             import random
             replacements = statues.copy()
             random.shuffle(statues)
@@ -96,10 +96,10 @@ class EnemyPacks():
     # As MIX is handled in the shuffle/random functions, this is for handling the other options
     def _handle_original_shuffle_dragons(self):
         dragons = list(bosses.dragon_pack_name)
-        if self.args.dragon_boss_location == bosses.BossLocations.ORIGINAL:
+        if self.args.dragon_boss_locations == bosses.BossLocations.ORIGINAL:
             for dragon in dragons:
                 self.event_boss_replacements[dragon] = dragon
-        elif self.args.dragon_boss_location == bosses.BossLocations.SHUFFLE:
+        elif self.args.dragon_boss_locations == bosses.BossLocations.SHUFFLE:
             import random
             replacements = dragons.copy()
             random.shuffle(dragons)
@@ -206,11 +206,11 @@ class EnemyPacks():
             self.event_boss_replacements[bosses_to_replace.pop()] = pack
 
         # If statue locations are not mixed, they will always
-        if self.args.statue_boss_location == bosses.BossLocations.MIX:
+        if self.args.statue_boss_locations == bosses.BossLocations.MIX:
             for pack in required_statue_packs:
                 self.event_boss_replacements[bosses_to_replace.pop()] = pack
 
-        if self.args.dragon_boss_location == bosses.BossLocations.MIX:
+        if self.args.dragon_boss_locations == bosses.BossLocations.MIX:
             for pack in required_dragon_packs:
                 self.event_boss_replacements[bosses_to_replace.pop()] = pack
 
@@ -233,11 +233,11 @@ class EnemyPacks():
         # Statues are currently seen as normal bosses in regards to scaling,
         #   but the long-term goal is to add their own scaling option so it
         #   makes most sense to begin treating these similarly to dragons.
-        if self.args.statue_boss_location != bosses.BossLocations.MIX:
+        if self.args.statue_boss_locations != bosses.BossLocations.MIX:
             exclude_bosses += self.formations.ALL_STATUES
 
         # This is more futureproofing in the event we consolidate dragons in the future
-        if self.args.dragon_boss_location != bosses.BossLocations.MIX:
+        if self.args.dragon_boss_locations != bosses.BossLocations.MIX:
             exclude_bosses += self.formations.ALL_DRAGONS
 
         import random

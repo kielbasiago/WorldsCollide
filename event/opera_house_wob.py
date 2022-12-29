@@ -9,7 +9,8 @@ class OperaHouseWOB(Event):
         return self.characters.CELES
 
     def init_rewards(self):
-        self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
+        from constants.checks import OPERA_HOUSE_DISRUPTION
+        self.reward = self.add_reward(OPERA_HOUSE_DISRUPTION)
 
     def init_event_bits(self, space):
         space.write(

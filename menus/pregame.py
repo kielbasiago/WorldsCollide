@@ -128,6 +128,9 @@ class PreGameMenu:
         space = Write(Bank.C3, src, "pregame option click table")
         options_table = space.start_address
 
+        exit_scroll_area_handler = self.common.build_scroll_area_exit_handler(
+            self.MENU_NUMBER, self.invoke_flags, "pregame scroll area exit handler")
+
         src = [
             asm.JSR(self.common.refresh_sprites, asm.ABS),
 
@@ -167,8 +170,10 @@ class PreGameMenu:
             "SUSTAIN_SCROLL_AREA",
             asm.LDA(0x09, asm.DIR),
             asm.BIT(0x80, asm.IMM8),        # b pressed?
-            asm.BNE("EXIT_SCROLL_AREA"),    # branch if so
+            asm.BEQ("HANDLE_FLAGS_SUBMENUS"),  # branch if not
+            asm.JMP(exit_scroll_area_handler, asm.ABS), # b pressed: exit the scroll area
 
+            "HANDLE_FLAGS_SUBMENUS",
         ]
 
         for submenu_id in self.common.flags.submenus.keys():
@@ -176,11 +181,8 @@ class PreGameMenu:
 
         src += [
             asm.JMP(self.common.sustain_scroll_area, asm.ABS),
-
-            "EXIT_SCROLL_AREA",
         ]
-        src.extend(self.common.get_scroll_area_exit_src(self.MENU_NUMBER, self.invoke_flags))
-        
+
         # Called by C3 JSR jump table
         space = Write(Bank.C3, src, "pregame sustain")
         self.sustain = space.start_address
