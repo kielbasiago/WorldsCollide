@@ -225,7 +225,7 @@ class TrackMenu:
             asm.JSR(self.common.refresh_sprites, asm.ABS),
 
             # if in a scroll-area menu, sustain the scroll area
-            asm.LDA(0x0200, asm.ABS), 
+            asm.LDA(0x0200, asm.ABS),
             asm.CMP(self.common.objectives.MENU_NUMBER, asm.IMM8),
             asm.BEQ("SUSTAIN_SCROLL_AREA"),
             asm.CMP(self.common.checks.MENU_NUMBER, asm.IMM8),
