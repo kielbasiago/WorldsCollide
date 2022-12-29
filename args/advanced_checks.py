@@ -8,6 +8,7 @@ def name():
 char_esper_item_reward = "cei"
 esper_item_reward = "ei"
 item_reward = "i"
+no_reward = "no"
 
 allowed_values = [
     char_esper_item_reward,
@@ -40,8 +41,8 @@ def parse(parser):
     advanced_checks.add_argument("-fcrr", "--force-character-rewards", type = str,
                 help = "Forces list of checks to give an CHARACTER reward")
 
-    advanced_checks.add_argument("-drewards", "--dragon-rewards", default = item_reward, type = str,
-                choices = [char_esper_item_reward, esper_item_reward, item_reward],
+    advanced_checks.add_argument("-drewards", "--dragon-rewards", default = None, type = str,
+                choices = [char_esper_item_reward, esper_item_reward, item_reward, no_reward],
                 help = "Specifies the rewards of dragons. Only applies to dragons outside of Kefka's Tower")
 
 character_title = "Character Checks"
@@ -60,9 +61,11 @@ def process(args):
         args.dragon_reward = RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM
     elif args.dragon_rewards == esper_item_reward:
         args.dragon_reward = RewardType.ESPER | RewardType.ITEM
+    elif args.dragon_rewards == no_reward:
+        args.dragon_reward = RewardType.NONE
     else:
         args.dragon_reward = RewardType.ITEM
-
+        
     if args.no_free_characters_espers:
         args.check_preset = NO_FREE_CHARACTERS_ESPERS.key
 
@@ -125,9 +128,11 @@ def options(args):
     if args.item_rewards:
         opts[item_title] = args.item_rewards
 
-    if args.dragon_rewards == char_esper_item_reward:
+    if args.dragon_reward == RewardType.NONE:
+        opts['Dragon Rewards'] = 'None'
+    elif args.dragon_reward & RewardType.CHARACTER:
         opts['Dragon Rewards'] = "Char/Espr/Item"
-    elif args.dragon_rewards == esper_item_reward:
+    elif args.dragon_reward & RewardType.ESPER:
         opts['Dragon Rewards'] = "Esper/Item"
     else:
         opts['Dragon Rewards'] = "Item"

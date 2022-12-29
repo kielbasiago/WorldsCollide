@@ -15,7 +15,7 @@ AH_CLOSED = CheckPreset(
 )
 
 NO_FREE_CHARACTERS = CheckPreset(
-    'nfchar',
+    'nfc',
     "No Free Characters",
     RewardType.ESPER | RewardType.ITEM,
     "All free checks that can reward characters are guaranteed to reward an ESPER or ITEM",
@@ -32,7 +32,7 @@ NO_FREE_CHARACTERS = CheckPreset(
 
 NO_FREE_CHARACTERS_ESPERS = CheckPreset(
     'nfce',
-    "No Free C+E",
+    "No Free Characters/Espers",
     RewardType.ITEM,
     "All free checks are guaranteed to reward an ITEM. Includes Auction House and Tzen Thief.",
     [
