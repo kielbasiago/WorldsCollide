@@ -32,8 +32,9 @@ def parse(parser):
                         help = "Normalize lower boss stats and apply random distortion")
     bosses.add_argument("-be", "--boss-experience", action = "store_true",
                         help = "Boss battles award experience")
+
     bosses.add_argument("-de", "--dragon-experience", 
-                        choices = [str(x) for x in list(range(0, 231))] + DragonExp.ALL,
+                        choices = [str(x) for x in list(range(0, 251))] + DragonExp.ALL,
                         default = None,
                         metavar = "VALUE",
                         type = str.lower,
