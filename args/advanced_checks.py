@@ -8,7 +8,7 @@ def name():
 char_esper_item_reward = "cei"
 esper_item_reward = "ei"
 item_reward = "i"
-no_reward = "no"
+no_reward = "none"
 
 allowed_values = [
     char_esper_item_reward,
