@@ -102,6 +102,8 @@ class Event():
             reward_string += "*" + self.espers.get_name(reward.id)
         elif reward.type == RewardType.ITEM:
             reward_string += self.items.get_name(reward.id)
+        elif reward.type == RewardType.NONE:
+            reward_string += "None"
         self.rewards_log.append(reward_string + suffix)
 
     def log_change(self, original, new):
