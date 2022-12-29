@@ -82,8 +82,7 @@ class Events():
             if slot.possible_types == RewardType.NONE:
                 slot.id = None
                 slot.type = RewardType.NONE
-                continue
-            if slot.single_possible_type():
+            elif slot.single_possible_type():
                 slot.id, slot.type = choose_reward(slot.possible_types, self.characters, self.espers, self.items, exclude_character=[slot.check.gate_character])
 
     def choose_char_esper_possible_rewards(self, reward_slots):
