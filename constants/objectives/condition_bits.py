@@ -71,9 +71,9 @@ check_bit = [
     NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM),            # 61
     NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST),      # 62
     NameBit("KT Right Triad Statue", event_bit.DEFEATED_GODDESS),        # 63
-    NameBit("Narshe Moogle Defense", event_bit.FINISHED_MOOGLE_DEFENSE), # 64,
+    # TODO MOOGLE DEFENSE - Add To checks
+    # NameBit("Narshe Moogle Defense", event_bit.FINISHED_MOOGLE_DEFENSE), # 64,
 ]
-
 
 quest_bit = [
     NameBit("Defeat Sealed Cave Ninja", event_bit.DEFEATED_NINJA_CAVE_TO_SEALED_GATE),
