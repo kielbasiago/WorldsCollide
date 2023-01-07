@@ -18,13 +18,41 @@ class NarsheMoogleDefense(Event):
         return self.characters.MOG
 
     def init_rewards(self):
-        self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
+        # TODO MOOGLE DEFENSE - Enable rewards
+        pass
+        # self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
 
     def init_event_bits(self, space):
-        space.write(
-            field.SetEventBit(npc_bit.ARVIS_INTRO), # show Arvis
-            field.ClearEventBit(npc_bit.MARSHAL_NARSHE_WOB), # do not show marshal
-        )
+        # TODO MOOGLE DEFENSE - Show arvis
+        pass
+        # space.write(
+        #     # field.SetEventBit(npc_bit.ARVIS_INTRO), # show Arvis
+        #     field.ClearEventBit(npc_bit.ARVIS_INTRO), # hide Arvis
+        #     field.ClearEventBit(npc_bit.MARSHAL_NARSHE_WOB), # do not show marshal
+        # )
+
+    def mod(self):
+        # TODO MOOGLE DEFENSE Enable event
+        pass
+        # self.terra_npc_mod() 
+
+        # if self.args.debug:
+        #     self.marshal_test_mod()
+
+        # self.marshal_npc_mod()
+
+        # self.arvis_start_mod()
+        # self.event_start_mod()
+        # self.marshal_battle_mod()
+
+        # if self.reward.type == RewardType.CHARACTER:
+        #     self.character_mod(self.reward.id)
+        # elif self.reward.type == RewardType.ESPER:
+        #     self.esper_mod(self.reward.id)
+        # elif self.reward.type == RewardType.ITEM:
+        #     self.item_mod(self.reward.id)
+
+        # self.log_reward(self.reward)
 
     def _add_moogle_to_party_src(self, party_idx):
         # Event logic to add a moogle to the given party
@@ -478,28 +506,3 @@ class NarsheMoogleDefense(Event):
             field.AddItem(item),
             field.Dialog(self.items.get_receive_dialog(item)),
         ])
-
-    def mod(self):
-        self.terra_npc_mod() 
-
-        if self.args.debug:
-            self.marshal_test_mod()
-
-        self.marshal_npc_mod()
-
-        self.arvis_start_mod()
-        self.event_start_mod()
-        self.marshal_battle_mod()
-
-        if self.reward.type == RewardType.CHARACTER:
-            self.character_mod(self.reward.id)
-        elif self.reward.type == RewardType.ESPER:
-            self.esper_mod(self.reward.id)
-        elif self.reward.type == RewardType.ITEM:
-            self.item_mod(self.reward.id)
-
-        self.log_reward(self.reward)
-
-
-
-

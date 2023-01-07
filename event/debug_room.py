@@ -50,6 +50,49 @@ class DebugRoom(Event):
         self._add_recruit_npc(self.characters.GOGO,   13, 8, direction.DOWN)
         self._add_recruit_npc(self.characters.UMARO,  14, 8, direction.DOWN)
 
+    def _add_dragon_encounter_npc(self, encounter_id, x, y, direction):
+        from data.bosses import name_pack
+
+        dragon_palettes = {
+            name_pack["Ice Dragon"]: 3,
+            name_pack["Storm Drgn"]: 0,
+            name_pack["Dirt Drgn"]: 2,
+            name_pack["Gold Drgn"]: 2,
+            name_pack["Skull Drgn"]: 4,
+            name_pack["Blue Drgn"]: 3,
+            name_pack["Red Dragon"]: 2,
+            name_pack["White Drgn"]: 2,
+        }
+        # Add an npc to battle each dragon
+        src = [
+            field.InvokeBattle(encounter_id),
+            field.FadeInScreen(),
+            field.WaitForFade(),
+            field.Return(),
+        ]
+
+        space = Write(Bank.CC, src, "Dragon Battle NPC")
+
+        recruit_npc = NPC()
+        recruit_npc.x = x
+        recruit_npc.y = y
+        recruit_npc.direction = direction
+        recruit_npc.sprite = 0x39
+        recruit_npc.palette = dragon_palettes[encounter_id]
+        recruit_npc.set_event_address(space.start_address)
+        self.maps.append_npc(self.DEBUG_ROOM, recruit_npc)
+
+    def add_dragon_encounter_npcs_mod(self):
+        from data.bosses import name_pack
+        self._add_dragon_encounter_npc(name_pack["Ice Dragon"],  1, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Storm Drgn"],  2, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Dirt Drgn"],   3, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Gold Drgn"], 4, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Skull Drgn"],  5, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Blue Drgn"],  6, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["Red Dragon"],  7, 8, direction.DOWN)
+        self._add_dragon_encounter_npc(name_pack["White Drgn"], 8, 8, direction.DOWN)
+
     def _add_teleport_npc(self, source_map, source_x, source_y, direction, dest_map, dest_x, dest_y):
         # Test code to add a Marshal battle NPC to Blackjack
         from data.bosses import name_pack
@@ -75,7 +118,13 @@ class DebugRoom(Event):
         self._add_teleport_npc(self.DEBUG_ROOM, 8, 10, direction.UP, BLACKJACK_EXTERIOR_MAP, 15, 5)
 
     def mod(self):
+        show_characters = True
         if self.args.debug:
             self.remove_npcs_mod()
-            self.add_recruit_npcs_mod()
             self.add_teleport_npcs_mod()
+            
+            # These are mutually exclusive as we hit an NPC limit showing both
+            if show_characters:
+                self.add_recruit_npcs_mod()
+            else:
+                self.add_dragon_encounter_npcs_mod()
