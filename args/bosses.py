@@ -34,7 +34,7 @@ def parse(parser):
                         help = "Boss battles award experience")
 
     bosses.add_argument("-de", "--dragon-experience", 
-                        choices = [str(x) for x in list(range(0, 251))] + DragonExp.ALL,
+                        choices = [str(x) for x in list(range(0, 301))] + DragonExp.ALL,
                         default = None,
                         metavar = "VALUE",
                         type = str.lower,

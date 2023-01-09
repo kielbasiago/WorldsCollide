@@ -78,18 +78,18 @@ dragons = [
 ]
 
 class DragonExp:
-    MAX = "max"
+    STATUES = "statues"
     HIGH = "high"
     MEDIUM = "med"
     LOW = "low"
     NONE = "none"
 
-    ALL = [MAX, HIGH, MEDIUM, LOW, NONE]
+    ALL = [STATUES, HIGH, MEDIUM, LOW, NONE]
 
 dragon_exp_values = {
-  DragonExp.MAX    :  {key: 250 for (idx, key) in enumerate(dragons)},
-  DragonExp.HIGH    :  {key: 200 for (idx, key) in enumerate(dragons)},
-  DragonExp.MEDIUM  : {key: 155 for (idx, key) in enumerate(dragons)},
-  DragonExp.LOW     : {key: 125 for (idx, key) in enumerate(dragons)},
+  DragonExp.STATUES    :  {key: 230 for (idx, key) in enumerate(dragons)}, # Statue Exp
+  DragonExp.HIGH    :  {key: 200 for (idx, key) in enumerate(dragons)},    # AtmaWeapon exp
+  DragonExp.MEDIUM  : {key: 155 for (idx, key) in enumerate(dragons)},     # Ultros 4 exp
+  DragonExp.LOW     : {key: 120 for (idx, key) in enumerate(dragons)},     # Ultros 2 exp
   DragonExp.NONE    : {key: 0 for (idx, key) in enumerate(dragons)},
 }
