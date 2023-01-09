@@ -124,7 +124,7 @@ def options(args):
         ("Shuffle/Random Phunbaba 3", args.shuffle_random_phunbaba3),
         ("Normalize & Distort Stats", args.boss_normalize_distort_stats),
         ("Boss Experience", args.boss_experience),
-        ("Dragon Experience", dragon_experience.capitalize()),
+        ("Dragon Exp", dragon_experience.capitalize()),
         ("No Undead", args.boss_no_undead),
         ("Marshal Keep Lobos", args.boss_marshal_keep_lobos),
     ]

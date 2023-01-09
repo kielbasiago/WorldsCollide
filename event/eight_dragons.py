@@ -22,7 +22,10 @@ class EightDragons(Event):
         self.dragon_rewards = []
 
         for dragon in dragon_data:
-            self.dragon_rewards.append(self.add_reward(dragon.check, self.args.dragon_reward))
+            dragon_reward_type = self.args.dragon_reward
+            if dragon.check not in RECRUITABLE_DRAGONS:
+                dragon_reward_type = self.args.dragon_reward & ~RewardType.CHARACTER
+            self.dragon_rewards.append(self.add_reward(dragon.check, dragon_reward_type))
 
     def init_event_bits(self, space):
         space.write(
