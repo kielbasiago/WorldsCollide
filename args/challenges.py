@@ -1,5 +1,3 @@
-from constants.checks import FIGARO_CASTLE_THRONE, KOHLINGEN_CAFE
-from data.npc_bit import WEAPON_ELDER_NARSHE
 
 def name():
     return "Challenges"

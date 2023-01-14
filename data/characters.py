@@ -1,10 +1,6 @@
 from data.character import Character
 from data.natural_magic import NaturalMagic
 from data.commands import Commands
-from data.menu_character_sprites import MenuCharacterSprites
-from data.character_sprites import CharacterSprites
-from data.character_palettes import CharacterPalettes
-from data.party_battle_scripts import PartyBattleScripts
 from data.structures import DataArray
 
 import data.characters_asm as characters_asm
@@ -45,6 +41,10 @@ class Characters():
         self.natural_magic = NaturalMagic(self.rom, self.args, self, spells)
         self.commands = Commands(self.characters)
 
+        from data.menu_character_sprites import MenuCharacterSprites
+        from data.character_sprites import CharacterSprites
+        from data.character_palettes import CharacterPalettes
+        from data.party_battle_scripts import PartyBattleScripts
         self.menu_character_sprites = MenuCharacterSprites(self.rom, self.args)
         self.character_sprites = CharacterSprites(self.rom, self.args)
         self.character_palettes = CharacterPalettes(self.rom, self.args, self.menu_character_sprites)

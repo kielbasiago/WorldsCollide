@@ -1,6 +1,5 @@
 from data.character_sprites import PORTRAIT_CHARACTERS, SPRITE_CHARACTERS, DEFAULT_CHARACTER_PORTRAITS, DEFAULT_CHARACTER_SPRITES
 from data.character_palettes import SPRITE_PALETTE_COUNT, DEFAULT_CHARACTER_PALETTES, DEFAULT_CHARACTER_SPRITE_PALETTES
-from data.characters import Characters
 
 def parse(parser):
     graphics = parser.add_argument_group("Graphics")
@@ -23,9 +22,11 @@ def process(args):
     import graphics.palettes.palettes as palettes
     import graphics.portraits.portraits as portraits
     import graphics.sprites.sprites as sprites
+    from data.characters import Characters
 
     if args.character_names is not None:
         args.names = args.character_names.split('.')
+        
         if len(args.names) != Characters.CHARACTER_COUNT:
             raise ValueError(f"Invalid number of name arguments ({len(args.names)} should be {Characters.CHARACTER_COUNT})")
 
@@ -131,6 +132,7 @@ def _sprite_palettes_log(args):
     return log
 
 def _other_portraits_sprites_log(args):
+    from data.characters import Characters  
     from log import format_option
     log = ["Other Portraits & Sprites"]
 
@@ -152,6 +154,7 @@ def _other_portraits_sprites_log(args):
     return log
 
 def _character_customization_log(args):
+    from data.characters import Characters  
     from log import format_option
     log = ["Character Customization"]
 

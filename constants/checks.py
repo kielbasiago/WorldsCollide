@@ -1,5 +1,4 @@
 from collections import namedtuple
-from data.characters import Characters
 import data.event_bit as event_bit
 import data.npc_bit as npc_bit
 from event.event_reward import RewardType
