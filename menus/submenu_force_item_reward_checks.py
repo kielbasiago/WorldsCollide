@@ -10,17 +10,23 @@ class FlagsForceRewardChecks(scroll_area.ScrollArea):
         self.number_items = len(item_checks)
         self.lines = []
 
-        self.lines.append(scroll_area.Line(title, f0.set_blue_text_color))
+        self.lines.append(scroll_area.Line(title, f0.set_user_text_color))
 
         if check_preset:
             from constants.check_presets import key_preset
             preset_title = key_preset[check_preset].name
+            preset_description = key_preset[check_preset].description
 
-            self.lines.append(scroll_area.Line("-------------------------", f0.set_user_text_color))
-            self.lines.append(scroll_area.Line(f"{preset_title}", f0.set_user_text_color))
-            self.lines.append(scroll_area.Line("-------------------------", f0.set_user_text_color))
+            lines = preset_description.split('<line>', 10)
 
+            self.lines.append(scroll_area.Line("-------------------------", f0.set_blue_text_color))
+            self.lines.append(scroll_area.Line(f"{preset_title}", f0.set_blue_text_color))
             self.lines.append(scroll_area.Line("", f0.set_user_text_color))
+
+            for line in lines:
+                self.lines.append(scroll_area.Line(f"{line.strip()}", f0.set_blue_text_color))
+
+            self.lines.append(scroll_area.Line("-------------------------", f0.set_blue_text_color))
 
         check_lines = FlagsForceRewardChecks._format_check_list_menu(item_checks)
         for check in check_lines:
@@ -44,14 +50,5 @@ class FlagsForceRewardChecks(scroll_area.ScrollArea):
         return check_lines
 
 
-class FlagsForceEsperRewardChecks(FlagsForceRewardChecks):
+class FlagsCheckPreset(FlagsForceRewardChecks):
     MENU_NUMBER = 16
-
-class FlagsForceEsperItemRewardChecks(FlagsForceRewardChecks):
-    MENU_NUMBER = 17
-
-class FlagsForceItemRewardChecks(FlagsForceRewardChecks):
-    MENU_NUMBER = 18
-
-class FlagsForceCharacterRewardChecks(FlagsForceRewardChecks):
-    MENU_NUMBER = 19

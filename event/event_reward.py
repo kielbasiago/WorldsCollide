@@ -55,7 +55,9 @@ def choose_reward(possible_types, characters, espers, items, exclude_character =
     item_possible = False
     for reward_type in all_types:
         if reward_type & possible_types:
-            if reward_type == RewardType.CHARACTER and characters.get_available_count():
+            if reward_type == RewardType.NONE:
+                return (None, reward_type)
+            elif reward_type == RewardType.CHARACTER and characters.get_available_count():
                 return (characters.get_random_available(exclude = exclude_character ), reward_type)
             elif reward_type == RewardType.ESPER and espers.available():
                 return (espers.get_random_esper(), reward_type)

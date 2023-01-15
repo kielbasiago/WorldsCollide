@@ -45,11 +45,6 @@ def parse(parser):
                 choices = [char_esper_item_reward, esper_item_reward, item_reward, no_reward],
                 help = "Specifies the rewards of dragons. Only applies to dragons outside of Kefka's Tower")
 
-character_title = "Character Checks"
-esper_item_title = "Esper+Item Checks"
-esper_title = "Esper Checks"
-item_title = "Item Checks"
-
 def process(args):
     from constants.check_presets import key_preset, NO_FREE_CHARACTERS_ESPERS
     args.character_rewards = []
@@ -117,16 +112,14 @@ def flags(args):
 
     return flags
 
+preset_title = "Check Preset"
 def options(args):
     opts = {}
-    if args.character_rewards:
-        opts[character_title] = args.character_rewards
-    if args.esper_item_rewards:
-        opts[esper_item_title] = args.esper_item_rewards
-    if args.esper_rewards:
-        opts[esper_title] = args.esper_rewards
-    if args.item_rewards:
-        opts[item_title] = args.item_rewards
+    
+    if args.check_preset:
+        opts[preset_title] = args.character_rewards or args.esper_item_rewards or args.esper_rewards or args.item_rewards
+    else:
+        opts[preset_title] = "None"
 
     if args.dragon_reward == RewardType.NONE:
         opts['Dragon Rewards'] = 'None'
@@ -135,7 +128,7 @@ def options(args):
     elif args.dragon_reward & RewardType.ESPER:
         opts['Dragon Rewards'] = "E+I"
     else:
-        opts['Dragon Rewards'] = "I"
+        opts['Dragon Rewards'] = "Item"
 
     return [(key, value) for (key, value) in opts.items()]
 
@@ -147,34 +140,16 @@ def _format_check_log_entries(check_ids):
     return check_entries
 
 def menu(args):
-    from menus.submenu_force_item_reward_checks import FlagsForceCharacterRewardChecks, FlagsForceEsperItemRewardChecks, FlagsForceEsperRewardChecks, FlagsForceItemRewardChecks
+    from menus.submenu_force_item_reward_checks import FlagsCheckPreset
 
     entries = options(args)
     for index, entry in enumerate(entries):
         key, value = entry
-        if key == character_title:
+        if key == preset_title:
             if value:
-                entries[index] = (character_title, FlagsForceCharacterRewardChecks(character_title, value, args.check_preset)) # flags sub-menu
+                entries[index] = (preset_title, FlagsCheckPreset(preset_title, value, args.check_preset)) # flags sub-menu
             else:
-                 entries[index] = (character_title, "None")
-
-        if key == esper_item_title:
-            if value:
-                entries[index] = (esper_item_title, FlagsForceEsperItemRewardChecks(esper_item_title, value, args.check_preset)) # flags sub-menu
-            else:
-                 entries[index] = (esper_item_title, "None")
-
-        if key == esper_title:
-            if value:
-                entries[index] = (esper_title, FlagsForceEsperRewardChecks(esper_title, value, args.check_preset)) # flags sub-menu
-            else:
-                 entries[index] = (esper_title, "None")
-
-        if key == item_title:
-            if value:
-                entries[index] = (item_title, FlagsForceItemRewardChecks(item_title, value, args.check_preset)) # flags sub-menu
-            else:
-                 entries[index] = (item_title, "None")
+                entries[index] = (preset_title, [])
 
     return (name(), entries)
 
@@ -185,12 +160,13 @@ def log(args):
     entries = options(args)
     for entry in entries:
         key, value = entry
-        if key == character_title or key == esper_item_title or key == esper_title or key == item_title:
+        if key == preset_title:
             if len(value) == 0:
-                entry = (key, "None")
+                entry = (key, value)
             else:
                 entry = (key, "") # The entries will show up on subsequent lines
             log.append(format_option(*entry))
+            from constants.check_presets import key_preset
             for check_entry in _format_check_log_entries(value):
                 log.append(format_option(*check_entry))
         else:

@@ -7,7 +7,7 @@ AH_CLOSED = CheckPreset(
     "ah",
     "Auction House is Closed",
     RewardType.ITEM,
-    "The auction house will only have items available.",
+    "The auction house will<line>only reward ITEMS",
     [
         AUCTION1,
         AUCTION2
@@ -18,7 +18,7 @@ NO_FREE_CHARACTERS = CheckPreset(
     'nfc',
     "No Free Characters",
     RewardType.ESPER | RewardType.ITEM,
-    "All free checks that can reward characters are guaranteed to reward an ESPER or ITEM",
+    "All free checks that can<line>reward characters are<line>guaranteed to reward<line>an ESPER or ITEM",
     [
         COLLAPSING_HOUSE,
         FIGARO_CASTLE_THRONE,
@@ -34,7 +34,7 @@ NO_FREE_CHARACTERS_ESPERS = CheckPreset(
     'nfce',
     "No Free Characters/Espers",
     RewardType.ITEM,
-    "All free checks are guaranteed to reward an ITEM. Includes Auction House and Tzen Thief.",
+    "All free checks are<line>guaranteed to reward<line>an ITEM",
     [
         AUCTION1,
         AUCTION2,

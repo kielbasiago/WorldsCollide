@@ -18,21 +18,21 @@ from constants.entities import (
 )
 
 character_checks = {
-    "Celes"  : [c for c in [check for check in all_checks if check.gate_character == CELES]],
-    "Cyan"   : [c for c in [check for check in all_checks if check.gate_character == CYAN]],
-    "Edgar"  : [c for c in [check for check in all_checks if check.gate_character == EDGAR]],
-    "Gau"    : [c for c in [check for check in all_checks if check.gate_character == GAU]],
-    "Gogo"   : [c for c in [check for check in all_checks if check.gate_character == GOGO]],
-    "Locke"  : [c for c in [check for check in all_checks if check.gate_character == LOCKE]],
-    "Mog"    : [c for c in [check for check in all_checks if check.gate_character == MOG]],
-    "Relm"   : [c for c in [check for check in all_checks if check.gate_character == RELM]],
-    "Sabin"  : [c for c in [check for check in all_checks if check.gate_character == SABIN]],
-    "Setzer" : [c for c in [check for check in all_checks if check.gate_character == SETZER]],
-    "Shadow" : [c for c in [check for check in all_checks if check.gate_character == SHADOW]],
-    "Strago" : [c for c in [check for check in all_checks if check.gate_character == STRAGO]],
-    "Terra"  : [c for c in [check for check in all_checks if check.gate_character == TERRA]],
-    "Umaro"  : [c for c in [check for check in all_checks if check.gate_character == UMARO]],
-    ""       : [c for c in [check for check in all_checks if check.gate_character is None]],
+    "Celes"   : [c for c in [check for check in all_checks if check.gate_character == CELES]],
+    "Cyan"    : [c for c in [check for check in all_checks if check.gate_character == CYAN]],
+    "Edgar"   : [c for c in [check for check in all_checks if check.gate_character == EDGAR]],
+    "Gau"     : [c for c in [check for check in all_checks if check.gate_character == GAU]],
+    "Gogo"    : [c for c in [check for check in all_checks if check.gate_character == GOGO]],
+    "Locke"   : [c for c in [check for check in all_checks if check.gate_character == LOCKE]],
+    "Mog"     : [c for c in [check for check in all_checks if check.gate_character == MOG]],
+    "Relm"    : [c for c in [check for check in all_checks if check.gate_character == RELM]],
+    "Sabin"   : [c for c in [check for check in all_checks if check.gate_character == SABIN]],
+    "Setzer"  : [c for c in [check for check in all_checks if check.gate_character == SETZER]],
+    "Shadow"  : [c for c in [check for check in all_checks if check.gate_character == SHADOW]],
+    "Strago"  : [c for c in [check for check in all_checks if check.gate_character == STRAGO]],
+    "Terra"   : [c for c in [check for check in all_checks if check.gate_character == TERRA]],
+    "Umaro"   : [c for c in [check for check in all_checks if check.gate_character == UMARO]],
+    "Ungated" : [c for c in [check for check in all_checks if check.gate_character is None]],
 }
 
 character_check_names = {
