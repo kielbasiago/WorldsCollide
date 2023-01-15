@@ -78,18 +78,33 @@ dragons = [
 ]
 
 class DragonExp:
+    # Defer to boss experience. When on, use legacy value (200). When false, use 0
+    # Use this for the default value to enable backwards compatibility with old flagsets
+    SMART = "smart"
     STATUES = "statues"
     HIGH = "high"
-    MEDIUM = "med"
+    MEDIUM = "medium"
     LOW = "low"
+    LOWEST = "lowest"
     NONE = "none"
 
-    ALL = [STATUES, HIGH, MEDIUM, LOW, NONE]
+    # Explicitly keep "SMART" out of this as there's an exception in logic
+    # Also removing   "NONE"  as it is another one-off 
+    ALL = [STATUES, HIGH, MEDIUM, LOW, LOWEST]
+    OTHERS = [SMART, NONE]
 
 dragon_exp_values = {
-  DragonExp.STATUES    :  {key: 230 for (idx, key) in enumerate(dragons)}, # Statue Exp
-  DragonExp.HIGH    :  {key: 200 for (idx, key) in enumerate(dragons)},    # AtmaWeapon exp
-  DragonExp.MEDIUM  : {key: 155 for (idx, key) in enumerate(dragons)},     # Ultros 4 exp
-  DragonExp.LOW     : {key: 120 for (idx, key) in enumerate(dragons)},     # Ultros 2 exp
-  DragonExp.NONE    : {key: 0 for (idx, key) in enumerate(dragons)},
+  # Goddess, Doom, Poltrgeist XP
+  DragonExp.STATUES    :  {key: 230 for (idx, key) in enumerate(dragons)},
+  # Legacy value   
+  DragonExp.SMART      :  {key: 200 for (idx, key) in enumerate(dragons)},
+  DragonExp.HIGH       :  {key: 200 for (idx, key) in enumerate(dragons)},
+  # Avg of Ultros 3 and Phunbaba 3
+  DragonExp.MEDIUM     : {key: 150 for (idx, key) in enumerate(dragons)},
+  # Avg of Dadaluma and Ultros 2
+  DragonExp.LOW        : {key: 115 for (idx, key) in enumerate(dragons)},
+  # Avg of Whelk and Ultros 1
+  DragonExp.LOWEST     : {key: 95 for (idx, key) in enumerate(dragons)},
+  # No Exp
+  DragonExp.NONE       : {key: 0 for (idx, key) in enumerate(dragons)},
 }

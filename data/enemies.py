@@ -153,10 +153,20 @@ class Enemies():
         from data.bosses_custom_exp import dragon_exp_values, dragons, DragonExp
 
         for dragon_id in dragons:
-            if self.args.dragon_experience in DragonExp.ALL:
-                self.enemies[dragon_id].exp = dragon_exp_values[self.args.dragon_experience][dragon_id]
-            elif int(self.args.dragon_experience) > 0:
-                self.enemies[dragon_id].exp = int(self.args.dragon_experience)
+            dragon = self.enemies[dragon_id]
+
+            dragon.exp = 0
+            
+            if self.args.dragon_experience == DragonExp.NONE:
+                return
+            elif self.args.dragon_experience == DragonExp.SMART:
+                if self.args.boss_experience:
+                    dragon.exp = dragon_exp_values[self.args.dragon_experience][dragon_id] * dragon.level
+            elif self.args.dragon_experience in DragonExp.ALL:
+                dragon.exp = dragon_exp_values[self.args.dragon_experience][dragon_id] * dragon.level
+            # Raw number entered, parse from args
+            elif isinstance(self.args.dragon_experience, str) and int(self.args.dragon_experience) > 0:
+                dragon.exp = int(self.args.dragon_experience) * dragon.level
 
     def boss_normalize_distort_stats(self):
         import random

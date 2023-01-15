@@ -131,11 +131,11 @@ def options(args):
     if args.dragon_reward == RewardType.NONE:
         opts['Dragon Rewards'] = 'None'
     elif args.dragon_reward & RewardType.CHARACTER:
-        opts['Dragon Rewards'] = "Char/Espr/Item"
+        opts['Dragon Rewards'] = "C+E+I"
     elif args.dragon_reward & RewardType.ESPER:
-        opts['Dragon Rewards'] = "Esper/Item"
+        opts['Dragon Rewards'] = "E+I"
     else:
-        opts['Dragon Rewards'] = "Item"
+        opts['Dragon Rewards'] = "I"
 
     return [(key, value) for (key, value) in opts.items()]
 
