@@ -119,7 +119,7 @@ def options(args):
     if args.check_preset:
         opts[preset_title] = args.character_rewards or args.esper_item_rewards or args.esper_rewards or args.item_rewards
     else:
-        opts[preset_title] = "None"
+        opts[preset_title] = []
 
     if args.dragon_reward == RewardType.NONE:
         opts['Dragon Rewards'] = 'None'
