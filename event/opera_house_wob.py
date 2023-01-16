@@ -9,7 +9,7 @@ class OperaHouseWOB(Event):
         return self.characters.CELES
 
     def init_rewards(self):
-        self.reward = self.add_reward(RewardType.CHARACTER | RewardType.ESPER | RewardType.ITEM)
+        self.reward = self.add_reward(RewardType.CHARACTER)
 
     def init_event_bits(self, space):
         space.write(
@@ -260,16 +260,16 @@ class OperaHouseWOB(Event):
         space.write(
             # game over if die to ultros instead of getting more chances
             # use the original game over so party is not refreshed (otherwise their stage positions are broken)
+            field.SetEventBit(event_bit.CONTINUE_MUSIC_DURING_BATTLE),
             field.InvokeBattle(boss_pack_id, check_game_over = False),
+            field.ClearEventBit(event_bit.CONTINUE_MUSIC_DURING_BATTLE),
             field.Call(field.ORIGINAL_CHECK_GAME_OVER),
         )
 
     def grand_finale_mod(self):
         formation = self.get_replacement_formation("Ultros 2")
-        replace_music = self.args.disable_ultros2_boss_theme and self.args.boss_battles_shuffled
+        replace_music = self.args.disable_ultros2_boss_theme and self.args.boss_battles_shuffle
 
-        formation.disable_battle_music = formation.disable_battle_music if replace_music else 1
-        formation.disable_victory_dance = formation.disable_victory_dance if replace_music else 1
 
     def after_battle_mod(self):
         # when maria changes to celes, a special celes sprite is used

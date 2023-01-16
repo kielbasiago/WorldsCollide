@@ -4,7 +4,7 @@ def name():
 def parse(parser):
     audio = parser.add_argument_group("Audio")
     audio.add_argument("-restoretheme", "--restore-character-check-themes", action = "store_true",
-                        help = "A number of checks that would play a found character's theme themes if it contains a character.")
+                        help = "A number of checks that would play a found character's theme now play the found character's theme if the check contains a character.")
     audio.add_argument('-restoreult2theme', '--restore-ultros2-boss-theme', action = "store_true",
                        help = "The boss in the Ultros 2 location (Opera House) will now play it's regular battle theme instead of being disabled for the Grand Finale.")
 
