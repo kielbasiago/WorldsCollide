@@ -23,10 +23,10 @@ def flags(args):
 
 def options(args):
     char_themes = "Original" if args.restore_character_check_themes else "Updated"
-    u2_battle_theme = "Original" if args.restore_ultros2_boss_theme else "Silence"
+    u2_battle_theme = "Original" if args.restore_ultros2_boss_theme else "Fixed"
     return [
-        ("Character Check Themes", char_themes),
-        ("Opera House Boss Theme", u2_battle_theme),
+        ("Check Themes", char_themes),
+        ("Opera Boss Theme", u2_battle_theme),
     ]
 
 def menu(args):
