@@ -1,4 +1,6 @@
 from multiprocessing.sharedctypes import Value
+
+from memory.space import Allocate, Reserve
 from constants.commands import *
 import random
 import args
@@ -113,6 +115,13 @@ class Commands:
         if args.commands or args.shuffle_commands:
             characters_asm.update_morph_character(self.characters[ : Characters.CHARACTER_COUNT])
 
+        from instruction import asm
+        # Fix magicite aiming
+        # Byte	original value	changed value
+        # 25049	    00                02
+        space = Reserve(0x219f9, 0x219fa, "Update summon pointer to magicite", asm.NOP())
+        space.write([0xAD, 0x3F])
+        
     def log(self):
         from log import section, format_option
         from data.characters import Characters
