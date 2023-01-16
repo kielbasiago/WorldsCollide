@@ -1,5 +1,6 @@
 from event.event import *
 from constants.checks import GAUS_FATHERS_HOUSE
+from music.song_utils import get_character_theme
 
 class GauFatherHouse(Event):
     def name(self):
@@ -56,7 +57,15 @@ class GauFatherHouse(Event):
             field.Return(),
         )
 
+    def character_music_mod(self, character):
+        if self.args.replace_character_check_themes:
+            space = Reserve(0xb0b78, 0xb0b79, "Play Song Shadow")
+            space.write([
+                field.StartSong(get_character_theme(character)),
+            ])
+
     def character_mod(self, character):
+        self.character_music_mod(character)
         self.shadow_npc.sprite = character
         self.shadow_npc.palette = self.characters.get_palette(character)
 
