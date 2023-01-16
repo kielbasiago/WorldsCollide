@@ -54,8 +54,6 @@ class OperaHouseWOB(Event):
         self.ultros_battle_mod()
         self.after_battle_mod()
 
-        self.grand_finale_mod()
-
         if self.reward.type == RewardType.CHARACTER:
             self.character_mod(self.reward.id)
             self.character_music_mod(self.reward.id if self.args.replace_character_check_themes else SETZER)
@@ -265,11 +263,6 @@ class OperaHouseWOB(Event):
             field.ClearEventBit(event_bit.CONTINUE_MUSIC_DURING_BATTLE),
             field.Call(field.ORIGINAL_CHECK_GAME_OVER),
         )
-
-    def grand_finale_mod(self):
-        formation = self.get_replacement_formation("Ultros 2")
-        replace_music = self.args.disable_ultros2_boss_theme and self.args.boss_battles_shuffle
-
 
     def after_battle_mod(self):
         # when maria changes to celes, a special celes sprite is used
