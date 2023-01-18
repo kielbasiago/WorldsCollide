@@ -145,6 +145,9 @@ id_portrait = {
     237: "Tails-JamesWhite89-Sonic",
     238: "Ursula-HoxNorf-FF4",
     239: "Wolf-JamesWhite89-Starfox",
+    240 : "Futo-HoxNorf-Touhou",
+    241 : "Kaguya-HoxNorf-Touhou",
+    242 : "Reimu2-HoxNorf-Touhou",
 }
 
 def get_bin_path(id_):
