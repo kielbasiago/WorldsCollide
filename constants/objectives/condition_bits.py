@@ -72,7 +72,7 @@ check_bit += [                                                          # Index
     NameBit("Kefka's Tower Ambush", event_bit.DEFEATED_INFERNO),        # 59
     NameBit("Kefka's Tower Guardian", event_bit.DEFEATED_GUARDIAN),     # 60
     NameBit("KT Left Triad Statue", event_bit.DEFEATED_DOOM),           # 61
-    NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST),     # 62
+    NameBit("KT Mid Triad Statue", event_bit.DEFEATED_POLTERGEIST),      # 62
     NameBit("KT Right Triad Statue", event_bit.DEFEATED_GODDESS),       # 63
 ]
 
@@ -87,6 +87,7 @@ quest_bit = [
     NameBit("Suplex A Train", event_bit.SUPLEXED_TRAIN),
     NameBit("Win An Auction", event_bit.WON_AN_AUCTION),
     NameBit("Win A Coliseum Match", event_bit.WON_A_COLISEUM_MATCH),
+    NameBit("Complete the KT Gauntlet", event_bit.COMPLETED_KT_GAUNTLET)
 ]
 
 boss_bit = []
