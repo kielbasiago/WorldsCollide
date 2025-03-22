@@ -1,4 +1,5 @@
 
+from constants.checks import RECRUITABLE_DRAGONS
 from event.event_reward import RewardType, Reward
 from data.item import Item
 from memory.space import Bank, Space, Reserve, Allocate, Free, Write, Read
@@ -48,8 +49,6 @@ class Event():
 
         assert bit
 
-        if reward_type:
-            return reward_type
         if bit in self.args.character_rewards:
             return RewardType.CHARACTER
         if bit in self.args.esper_item_rewards:
@@ -58,6 +57,8 @@ class Event():
             return RewardType.ESPER
         if bit in self.args.item_rewards:
             return RewardType.ITEM
+        if reward_type:
+            return reward_type
 
         return check_info.reward_types
 

@@ -128,8 +128,6 @@ class LoneWolf(Event):
             field.RecruitCharacter(character),
         )
 
-        space.write(get_character_theme(character))
-
         # move lone wolf falling up to make room for adding character
         # skip copying lone wolf take this dialog at [0xcd693,0xcd695]
         space = Reserve(0xcd61b, 0xcd67b, "lone wolf mog dialog and naming", field.NOP())
