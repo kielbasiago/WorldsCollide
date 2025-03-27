@@ -266,7 +266,7 @@ class KefkaTower(Event):
         self.dialogs.set_text(need_more_allies, "We need to find more allies.<end>")
 
         statues_entrance = self.dialogs.create_dialog("<choice> (Statues)<line><choice> (Entrance)<line><choice> (Not just yet)<end>")
-        gauntlet_entrance = self.dialogs.create_dialog("<choice> (Gauntlet)<line><choice> (Entrance)<line><choice> (Not just yet)<end>")
+        gauntlet_entrance = self.dialogs.create_dialog("<choice> (Gauntlet)<line><choice> (Not just yet)<end>")
         both_entrance = self.dialogs.create_dialog("<choice> (Gauntlet)<line><choice> (Statues)<line><choice> (Entrance)<line><choice> (Not just yet)<end>")
 
         space = Reserve(0xa01a2, 0xa02d5, "kefka tower first landing scene", field.NOP())
@@ -299,7 +299,7 @@ class KefkaTower(Event):
 
             "GAUNTLET_DIALOG",
             field.DialogBranch(gauntlet_entrance,
-                            dest1 = "GAUNTLET_LANDING",  dest2 = "ENTRANCE_LANDING", dest3 = "CANCEL_LANDING"),
+                            dest1 = "GAUNTLET_LANDING",  dest2 = "CANCEL_LANDING", dest3 = "CANCEL_LANDING"),
             "STATUES_DIALOG",
             field.DialogBranch(statues_entrance,
                             dest1 = "STATUE_LANDING", dest2 = "ENTRANCE_LANDING", dest3 = "CANCEL_LANDING"),
