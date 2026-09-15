@@ -205,6 +205,12 @@ class Maps():
         first_exit_id = (self.maps[map_id]["long_exits_ptr"] - self.maps[0]["long_exits_ptr"]) // LongMapExit.DATA_SIZE
         self.exits.print_long_exit_range(first_exit_id, self.get_long_exit_count(map_id))
 
+    def disable_random_encounter(self, map_id):
+        self.properties[map_id].set_random_encounters(False)
+
+    def disable_warp(self, map_id):
+        self.properties[map_id].set_warp(False)
+
     def _fix_imperial_camp_boxes(self):
         # near the northern tent normally accessed by jumping over a wall
         # there is a box which can be walked into but not out of which causes the game to lock
@@ -336,3 +342,4 @@ class Maps():
             npcs_ptr[0] = cur_map["npcs_ptr"] & 0xff
             npcs_ptr[1] = (cur_map["npcs_ptr"] & 0xff00) >> 8
             self.rom.set_bytes(npcs_ptr_address, npcs_ptr)
+            

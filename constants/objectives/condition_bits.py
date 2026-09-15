@@ -92,6 +92,7 @@ quest_bit = [
     quests.DEFEATED_DOOM,
     quests.DEFEATED_POLTERGEIST,
     quests.DEFEATED_GODDESS,
+    quests.COMPLETED_KT_GAUNTLET,
 ]
 
 from constants.objectives.boss_ids import boss_objective_ids
